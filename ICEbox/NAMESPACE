@@ -1,0 +1,12 @@
+export(ice, dice, clusterICE)
+
+#some methods
+S3method(plot, ice)
+S3method(print, ice)
+S3method(summary, ice)
+
+S3method(plot, dice)
+S3method(print, dice)
+S3method(summary, dice)
+
+
