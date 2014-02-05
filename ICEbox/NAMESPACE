@@ -8,5 +8,3 @@ S3method(summary, ice)
 S3method(plot, dice)
 S3method(print, dice)
 S3method(summary, dice)
-
-
