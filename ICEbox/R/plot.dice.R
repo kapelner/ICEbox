@@ -34,7 +34,7 @@ plot.dice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_sd = TRUE, pl
 	legend_text = NULL #default is no legend.
 	#case 1: random
 	if (missing(colorvec) && missing(color_by)){
-		colorvec = sort(rgb(runif(N, 0, 0.7), runif(N, 0, 0.7), runif(N, 0, 0.7)))
+		colorvec = sort(rgb(rep(0.4, N), rep(0.4, N), rep(0.4, N), runif(N, 0.4, 0.8)))
 	} 
 	#case 2: both colorvec and color_by specified, so print a warning but use colorvec.
 	if(!missing(colorvec) && !missing(color_by)){
@@ -217,7 +217,7 @@ plot.dice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_sd = TRUE, pl
 		abline(h = ylim[1] + offset, col = rgb(0.8,0.8,0.8))
 		at = seq(ylim[1], ylim[1] + max(x$sd_deriv), length.out = 2)	
 
-		labels = round(seq(0, max(x$sd_deriv), length.out = 2), 2)
+		labels = round(seq(0, max(x$sd_deriv), length.out = 2), 1)
 		axis(4, at = at, labels = labels)
 		mtext("sd(deriv)", side = 4,line = 0.5)
 

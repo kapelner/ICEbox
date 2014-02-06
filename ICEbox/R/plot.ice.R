@@ -2,7 +2,7 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds
 					colorvec, color_by = NULL, x_quantile = FALSE, plot_pdp = TRUE,
 					centered = FALSE, rug = TRUE, prop_range_y = TRUE, centered_percentile = 0.01, ...){
 	
-	DEFAULT_COLORVEC = c("green", "red", "blue", "black", "green", "yellow", "pink", "orange", "forestgreen", "grey")
+	DEFAULT_COLORVEC = c("firebrick3", "dodgerblue3", "gold1", "darkorchid4", "orange4", "forestgreen", "grey", "black")
 	#think of x as x. needs to be 'x' to match R's generic.
 
 	#list of passed arguments, including the ...
@@ -30,7 +30,8 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds
 	legend_text = NULL #default is no legend.
 	#case 1: random
 	if (missing(colorvec) && missing(color_by)){
-		colorvec = sort(rgb(runif(N, 0, 0.7), runif(N, 0, 0.7), runif(N, 0, 0.7)))
+		#we're going to choose dark grey and randomly alpha the lines
+		colorvec = sort(rgb(rep(0.4, N), rep(0.4, N), rep(0.4, N), runif(N, 0.4, 0.8)))
 	} 
 	#case 2: both colorvec and color_by specified, so print a warning but use colorvec.
 	if (!missing(colorvec) && !missing(color_by)){
@@ -123,7 +124,7 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds
 	#get the xlabel if it wasn't already passed explicitly.
 	if( is.null(arg_list$xlab)){
 		xlab = x$xlab
-    arg_list = modifyList(arg_list, list(xlab = xlab))
+    	arg_list = modifyList(arg_list, list(xlab = xlab))
 	}
 	if (x_quantile){
 		xlab = paste("quantile(", xlab, ")", sep = "")
@@ -196,8 +197,8 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds
 			xj = x$xj[plot_points_indices]
 		}
 		for (i in 1 : length(xj)){
-			points(xj[i], yhat_actual[i], col = "black", pch = 16, cex = pts_preds_size)
-			points(xj[i], yhat_actual[i], col = colorvec[i], pch = 16)
+			points(xj[i], yhat_actual[i], col = rgb(0.1, 0.1, 0.1), pch = 16, cex = pts_preds_size)
+			points(xj[i], yhat_actual[i], col = colorvec[i], pch = 16, cex = round(pts_preds_size * 0.7))
 		}
 	}
 	

@@ -41,25 +41,32 @@ rf_mod = randomForest(X, y)
 #make frac_to_build < 1 for fewer curves but faster computation
 rf.ice = ice(rf_mod, X, y, predictor = "age", frac_to_build = 1) 
 
+### Fig 1: the PDP
 # Note we can plot Friedman's PDP from Section 2
 # by making the individual curves in the ICE white:
+par(mar = c(4.3, 4, 0.1, 0.3))
 plot(rf.ice, x_quantile = TRUE, plot_pdp = TRUE, 
 		colorvec = rep("white", nrow(X)), plot_orig_pts_preds = FALSE)
 
-### plot ICE:
+### Fig 2: the ICE plot
 # Make frac_to_plot < 1 to plot a fraction of the curves built.  
 # This an make the plot less cluttered sometimes.
+par(mar = c(4.3, 4, 0.1, 0.3))
 plot(rf.ice, x_quantile = TRUE, plot_pdp = TRUE, frac_to_plot = 1) 
 
 ################### c-ICE #############################################
+
+### Fig 3: the c-ICE plot
 #just a matter of saying 'centered=TRUE'
+par(mar = c(4.3, 4, 0.1, 2.3))
 plot(rf.ice, x_quantile = TRUE, plot_pdp = TRUE, centered = TRUE)
 
 ################### d-ICE #############################################
 #create the object:
 rf.dice = dice(rf.ice)
 
-# plot the d-ICE:
+### Fig 4: the d-ICE plot
+par(mar = c(4.3, 4, 0.5, 2.3))
 plot(rf.dice, x_quantile = T)
 
 ################### Visualizing a second feature ######################
@@ -67,7 +74,9 @@ plot(rf.dice, x_quantile = T)
 # First create an indicator variable:
 rf.ice$Xice$I_rm = ifelse(rf.ice$Xice$rm > 6.2, 1, 0)  
 
+### Fig 5: c-ICE colored by rm 
 # then plot using 'color_by'.
+par(mar = c(4.3, 4, 0.1, 2.3))
 plot(rf.ice, frac_to_plot = 1, centered = TRUE, prop_range_y = TRUE,  
 		x_quantile = T, plot_orig_pts_preds = T, color_by = "I_rm")
 #######################################################################
