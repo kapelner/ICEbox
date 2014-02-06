@@ -1,6 +1,6 @@
 plot.dice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_sd = TRUE, plot_orig_pts_deriv = TRUE,
  						pts_preds_size = 1.5, colorvec, color_by = NULL, x_quantile = FALSE, plot_dpdp = TRUE, 
-						rug = TRUE, ...){
+						rug_quantile = seq(from = 0, to = 1, by = 0.1), ...){
 	#think of x as 'dice_obj'
 	DEFAULT_COLORVEC = c("green", "red", "blue", "black", "green", "yellow", "pink", "orange", "forestgreen", "grey")
 	arg_list = list(...)
@@ -208,8 +208,8 @@ plot.dice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_sd = TRUE, pl
 		points(grid, friedman_dpdp, col = "BLACK", type = "l", lwd = 4)
 	}
 	
-	if (rug && !x_quantile){
-		rug(x$xj)	
+	if (!is.null(rug_quantile) && !x_quantile){
+		axis(side = 1, line = -0.1, at = quantile(x$xj, rug_quantile), lwd = 0, tick = T, tcl = 0.4, lwd.ticks = 2, col.ticks = "blue4", labels = FALSE)
 	}
 
 	#do the sd plot if required.

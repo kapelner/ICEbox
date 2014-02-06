@@ -1,6 +1,6 @@
 plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds = TRUE, pts_preds_size = 1.5,
 					colorvec, color_by = NULL, x_quantile = FALSE, plot_pdp = TRUE,
-					centered = FALSE, rug = TRUE, prop_range_y = TRUE, centered_percentile = 0.01, ...){
+					centered = FALSE, rug_quantile = seq(from = 0, to = 1, by = 0.1), prop_range_y = TRUE, centered_percentile = 0.01, ...){
 	
 	DEFAULT_COLORVEC = c("firebrick3", "dodgerblue3", "gold1", "darkorchid4", "orange4", "forestgreen", "grey", "black")
 	#think of x as x. needs to be 'x' to match R's generic.
@@ -202,9 +202,9 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds
 		}
 	}
 	
-	if (rug && !x_quantile){
-		rug(x$xj)	
-	}	
+	if (!is.null(rug_quantile) && !x_quantile){
+		axis(side = 1, line = -0.1, at = quantile(x$xj, rug_quantile), lwd = 0, tick = T, tcl = 0.4, lwd.ticks = 2, col.ticks = "blue4", labels = FALSE)
+	}
 	
 	#if plot_pdp is true, plot actual pdp (in the sense of Friedman '01)
 	#Ensure this is done after all other plotting so nothing obfuscates the PDP

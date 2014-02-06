@@ -51,9 +51,9 @@ the predictor's original scale is used.
   \item{plot_dpdp}{
 If \code{TRUE}, the estimated derivative of the PDP is plotted and highlighted in yellow.
 }
-  \item{rug}{
-If \code{TRUE}, marks are drawn on the x-axis indicating the presence of actual observed values.
-Forced to \code{FALSE} when \code{x_quantile} is set to \code{TRUE}.
+  \item{rug_quantile}{
+If not null, tick marks are drawn on the x-axis corresponding to the vector of quantiles specified by this parameter.
+Forced to \code{NULL} when \code{x_quantile} is set to \code{TRUE}.
 }
   \item{\dots}{
 Additional plotting arguments.

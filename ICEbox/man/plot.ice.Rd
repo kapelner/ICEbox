@@ -51,9 +51,9 @@ If \code{TRUE}, the PDP is plotted and highlighted in yellow.
 If \code{TRUE}, all curves are re-centered to be 0 at the quantile given by \code{centered_percentile}.
 See Goldstein et al (2013) for details and examples. If \code{FALSE}, the original \code{ice_curves} are plotted. 
 }
-  \item{rug}{
-If \code{TRUE}, marks are drawn on the x-axis indicating the presence of actual observed values.
-Forced to \code{FALSE} when \code{x_quantile} is set to \code{TRUE}.
+  \item{rug_quantile}{
+If not null, tick marks are drawn on the x-axis corresponding to the vector of quantiles specified by this parameter.
+Forced to \code{NULL} when \code{x_quantile} is set to \code{TRUE}.
 }
   \item{prop_range_y}{
 When \code{TRUE} and \code{centered=TRUE} as well, the right vertical axis displays the
