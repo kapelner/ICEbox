@@ -2,7 +2,9 @@ plot.dice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_sd = TRUE, pl
  						pts_preds_size = 1.5, colorvec, color_by = NULL, x_quantile = FALSE, plot_dpdp = TRUE, 
 						rug_quantile = seq(from = 0, to = 1, by = 0.1), ...){
 	#think of x as 'dice_obj'
-	DEFAULT_COLORVEC = c("green", "red", "blue", "black", "green", "yellow", "pink", "orange", "forestgreen", "grey")
+	
+	DEFAULT_COLORVEC = c("firebrick3", "dodgerblue3", "gold1", "darkorchid4", "orange4", "forestgreen", "grey", "black")
+	
 	arg_list = list(...)
 
 	#list of passed arguments, including the ...
