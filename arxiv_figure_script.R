@@ -237,8 +237,26 @@ plot(rf.ice_extrap, plot_pdp=FALSE, color_by="x2_indic")
 #######################################################################
 
 ##################### Depression Clinical Data ########################
-# Examples pertaining to the depression dataset are omitted, 
-# as this data cannot currently be made public.
+
+library(bartMachine)
+library(PAI) #not a public CRAN library
+data(cpt1)   #not a public dataset
+
+bart_machine = build_bart_machine(X, y)
+ice.tx = ice(bart_machine, X, y, "treatment")
+
+bartFit = function(X, y){
+	build_bart_machine(X, y, run_in_sample = FALSE, verbose = FALSE)  
+}
+
+bartPred = function(object, newdata){
+	predict(object, new_data = newdata)
+}
+
+ice.backfitter = backfitter(X = X, y = y, predictor="treatment", eps=.005, 
+		fitMethod=bartFit, predictfcn = bartPred, iter.max = 10)
+
+alu_trt = additivityLineup(ice.backfitter, fitMethod = bartFit, realICE = ice.tx, figs = 20, centered = TRUE, color_by = "married")
 
 
 ##################### White Wine ######################################
