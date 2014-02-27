@@ -177,7 +177,7 @@ plot.dice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_sd = TRUE, pl
   
   
 	if (x$nominal_axis){
-		axis(1, at = sort(x$xj), labels = sort(x$xj))
+		axis(1, at = sort(x$xj), labels = sort(x$xj), cex.axis = arg_list$cex.axis)
 	}	
 	
 	for (i in 1 : nrow(d_ice_curves)){
@@ -211,7 +211,8 @@ plot.dice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_sd = TRUE, pl
 	}
 	
 	if (!is.null(rug_quantile) && !x_quantile){
-		axis(side = 1, line = -0.1, at = quantile(x$xj, rug_quantile), lwd = 0, tick = T, tcl = 0.4, lwd.ticks = 2, col.ticks = "blue4", labels = FALSE)
+		axis(side = 1, line = -0.1, at = quantile(x$xj, rug_quantile), lwd = 0, tick = T, tcl = 0.4, lwd.ticks = 2, col.ticks = "blue4", labels = FALSE,
+		     cex.axis = arg_list$cex.axis)
 	}
 
 	#do the sd plot if required.
@@ -220,8 +221,8 @@ plot.dice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_sd = TRUE, pl
 		at = seq(ylim[1], ylim[1] + max(x$sd_deriv), length.out = 2)	
 
 		labels = round(seq(0, max(x$sd_deriv), length.out = 2), 1)
-		axis(4, at = at, labels = labels)
-		mtext("sd(deriv)", side = 4,line = 0.5)
+		axis(4, at = at, labels = labels, cex.axis = arg_list$cex.axis)
+		mtext("sd(deriv)", side = 4,line = 0.5, cex = arg_list$cex)
 
 		points(x= grid, y = (x$sd_deriv+ylim[1]),type='l')
 	}
