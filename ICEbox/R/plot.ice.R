@@ -170,7 +170,7 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds
   
   
 	if (x$nominal_axis){
-		axis(1, at = sort(x$xj), labels = sort(x$xj))
+		axis(1, at = sort(x$xj), labels = sort(x$xj), cex.axis = arg_list$cex.axis)
 	}	
 	if (centered && prop_range_y){
 		at = seq(min(ice_curves), max(ice_curves), length.out = 5)
@@ -178,7 +178,7 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds
 		at = at - min(abs(at))
 		
 		labels = round(at / x$range_y, 2)
-		axis(4, at = at, labels = labels)
+		axis(4, at = at, labels = labels, cex.axis = arg_list$cex.axis)
 	}
 	
 	for (i in 1 : nrow(ice_curves)){
@@ -203,7 +203,7 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds
 	}
 	
 	if (!is.null(rug_quantile) && !x_quantile){
-		axis(side = 1, line = -0.1, at = quantile(x$xj, rug_quantile), lwd = 0, tick = T, tcl = 0.4, lwd.ticks = 2, col.ticks = "blue4", labels = FALSE)
+		axis(side = 1, line = -0.1, at = quantile(x$xj, rug_quantile), lwd = 0, tick = T, tcl = 0.4, lwd.ticks = 2, col.ticks = "blue4", labels = FALSE, cex.axis = arg_list$cex.axis)
 	}
 	
 	#if plot_pdp is true, plot actual pdp (in the sense of Friedman '01)
