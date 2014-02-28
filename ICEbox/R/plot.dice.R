@@ -222,7 +222,8 @@ plot.dice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_sd = TRUE, pl
 
 		labels = round(seq(0, max(x$sd_deriv), length.out = 2), 1)
 		axis(4, at = at, labels = labels, cex.axis = arg_list$cex.axis)
-		mtext("sd(deriv)", side = 4,line = 0.5, cex = arg_list$cex)
+    print(arg_list$cex)
+		mtext("sd(deriv)", side = 4,line = 0.5, cex = arg_list$cex.lab)
 
 		points(x= grid, y = (x$sd_deriv+ylim[1]),type='l')
 	}
