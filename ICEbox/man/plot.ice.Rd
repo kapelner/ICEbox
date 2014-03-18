@@ -9,7 +9,7 @@ Plotting of \code{ice} objects.
 \usage{
 \method{plot}{ice}(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds = TRUE, 
      pts_preds_size = 1.5, colorvec, color_by = NULL, x_quantile = FALSE, plot_pdp = TRUE,
-     centered = FALSE, rug = TRUE, prop_range_y = TRUE,
+     centered = FALSE, prop_range_y = TRUE, rug_quantile = seq(from = 0, to = 1, by = 0.1),
      centered_percentile = 0.01, ...)
 }
 
@@ -51,10 +51,6 @@ If \code{TRUE}, the PDP is plotted and highlighted in yellow.
 If \code{TRUE}, all curves are re-centered to be 0 at the quantile given by \code{centered_percentile}.
 See Goldstein et al (2013) for details and examples. If \code{FALSE}, the original \code{ice_curves} are plotted. 
 }
-  \item{rug_quantile}{
-If not null, tick marks are drawn on the x-axis corresponding to the vector of quantiles specified by this parameter.
-Forced to \code{NULL} when \code{x_quantile} is set to \code{TRUE}.
-}
   \item{prop_range_y}{
 When \code{TRUE} and \code{centered=TRUE} as well, the right vertical axis displays the
 centered values as a fraction of the response's range.  See Goldstein et al (2013) for details
@@ -63,6 +59,10 @@ and examples.
   \item{centered_percentile}{
 The percentile of \code{predictor} for which all \code{ice_curves} are "pinched together" and set to be 0.
 Default is .01.
+}
+  \item{rug_quantile}{
+If not null, tick marks are drawn on the x-axis corresponding to the vector of quantiles specified by this parameter.
+Forced to \code{NULL} when \code{x_quantile} is set to \code{TRUE}.
 }
   \item{\dots}{
 Other arguments to be passed to the \code{plot} function.

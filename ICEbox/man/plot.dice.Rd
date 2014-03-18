@@ -11,7 +11,7 @@ Plotting of \code{dice} objects.
 \method{plot}{dice}(x, plot_margin = 0.05, frac_to_plot = 1, 
       plot_sd = TRUE, plot_orig_pts_deriv = TRUE, pts_preds_size = 1.5, 
       colorvec, color_by = NULL, x_quantile = FALSE, plot_dpdp = TRUE, 
-      rug = TRUE, ...)
+      rug_quantile = seq(from = 0, to = 1, by = 0.1), ...)
 }
 \arguments{
   \item{x}{
