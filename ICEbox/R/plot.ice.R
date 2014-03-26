@@ -16,7 +16,7 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds
 	if (frac_to_plot <= 0 || frac_to_plot > 1 ){
 		stop("frac_to_plot must be in (0,1]")
 	}
-	if(!(prop_type %in% c("sd","range")){
+	if(!(prop_type %in% c("sd","range"))){
 		stop("prop_type must be either 'sd' or 'range'")
 	}
 
