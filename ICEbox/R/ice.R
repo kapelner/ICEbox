@@ -180,18 +180,21 @@ ice = function(object, X, y,
 
 	if(!missing(y) ){
 		range_y = max(y) - min(y)
+		sd_y = sd(y)
 	}else{
 		range_y = (max(ice_curves) - min(ice_curves))
-		cat("y not passed, so range_y is range of ice curves\n")
+		sd_y = sd(actual_predictions)
+		cat("y not passed, so range_y is range of ice curves and sd_y is sd of predictions on real observations\n")
 	}
 
 	#compute friedman's pdp:
 	pdp = apply(ice_curves, 2, mean) # pdp = average over the columns
-  if(missing(predictfcn)){
-    predictfcn=NULL
-  }
+  	if(missing(predictfcn)){
+	    predictfcn=NULL
+	}
+	
 	ice_obj = list(ice_curves = ice_curves, gridpts = grid_pts, predictor = predictor, xj = xj, actual_prediction = actual_predictions, 
-			logodds = logodds, xlab = xlab, nominal_axis = nominal_axis, range_y = range_y, Xice = X, pdp = pdp,
+			logodds = logodds, xlab = xlab, nominal_axis = nominal_axis, range_y = range_y, sd_y = sd_y, Xice = X, pdp = pdp,
 			indices_to_build = indices_to_build, frac_to_build = frac_to_build, predictfcn = predictfcn) 
 	class(ice_obj) = "ice"
 		

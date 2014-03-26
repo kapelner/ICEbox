@@ -82,8 +82,10 @@ predictions at the actual value of the predictors in the order of \code{Xice}.}
 is a column number, \code{xlab} is set to \code{colnames(X)[, predictor]}.}
 \item{nominal_axis}{If \code{TRUE}, \code{length(gridpts)} is 5 or fewer; otherwise \code{FALSE}.
 When \code{TRUE} the \code{plot} function treats the x-axis as if x is nominal.}
-\item{range_y}{If \code{y} was passed, the range of the response.  Otherwise it is defaulted to be
+\item{range_y}{If \code{y} was passed, the range of the response.  Otherwise it defaults to be
 \code{max(ice_curves)-min(ice_curves)} and a message is printed to the console.}
+\item{sd_y}{If \code{y} was passed, the standard deviation of the response.  Otherwise it is defaults to
+\code{sd(actual_predictions)} and a message is printed to the console.}
 \item{Xice}{A matrix containing the subset of \code{X} for which ICE curves are estimated. 
 Observations are ordered to be increasing in \code{predictor}.  This ordering is the same one 
 as in \code{ice_curves}, \code{xj} and \code{actual_predictions}, meaning for all these objects

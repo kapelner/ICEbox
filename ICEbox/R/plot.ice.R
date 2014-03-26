@@ -1,6 +1,7 @@
 plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds = TRUE, pts_preds_size = 1.5,
 					colorvec, color_by = NULL, x_quantile = FALSE, plot_pdp = TRUE,
-					centered = FALSE, rug_quantile = seq(from = 0, to = 1, by = 0.1), prop_range_y = TRUE, centered_percentile = 0.01, ...){
+					centered = FALSE, rug_quantile = seq(from = 0, to = 1, by = 0.1), prop_yhat = TRUE, centered_percentile = 0.01,
+					prop_type="sd",...){
 	
 	DEFAULT_COLORVEC = c("firebrick3", "dodgerblue3", "gold1", "darkorchid4", "orange4", "forestgreen", "grey", "black")
 	#think of x as x. needs to be 'x' to match R's generic.
@@ -15,6 +16,10 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds
 	if (frac_to_plot <= 0 || frac_to_plot > 1 ){
 		stop("frac_to_plot must be in (0,1]")
 	}
+	if(!(prop_type %in% c("sd","range")){
+		stop("prop_type must be either 'sd' or 'range'")
+	}
+
 	#extract the grid and lines to plot	
 	grid = x$gridpts 
 	n_grid = length(grid)
@@ -177,7 +182,12 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds
 		#we need to organize it so it's at zero
 		at = at - min(abs(at))
 		
-		labels = round(at / x$range_y, 2)
+		#check prop type.
+		if(prop_type == "range"){
+			labels = round(at / x$range_y, 2)  #as a fraction of range of y
+		}else{
+			labels = round(at / x$sd_y, 2)     #as a fraction of sd(y)
+		}
 		axis(4, at = at, labels = labels, cex.axis = arg_list$cex.axis)
 	}
 	
