@@ -1,7 +1,7 @@
 plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds = TRUE, pts_preds_size = 1.5,
-					colorvec, color_by = NULL, x_quantile = FALSE, plot_pdp = TRUE,
-					centered = FALSE, rug_quantile = seq(from = 0, to = 1, by = 0.1), prop_yhat = TRUE, centered_percentile = 0.01,
-					prop_type="sd",...){
+					colorvec, color_by = NULL, x_quantile = FALSE, plot_pdp = TRUE,centered = FALSE, 
+					prop_range_y = TRUE, rug_quantile = seq(from = 0, to = 1, by = 0.1), 
+					centered_percentile = 0.01, prop_type="sd",...){
 	
 	DEFAULT_COLORVEC = c("firebrick3", "dodgerblue3", "gold1", "darkorchid4", "orange4", "forestgreen", "grey", "black")
 	#think of x as x. needs to be 'x' to match R's generic.
