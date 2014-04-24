@@ -5,10 +5,10 @@ citEntry(
 	 title       = "Peeking Inside the Black Box: Visualizing Statistical Learning With Plots of Individual Conditional Expectation",
 	 author      = personList(as.person("Alex Goldstein"), as.person("Adam Kapelner"), as.person("Justin Bleich"), as.person("Emil Pitkin")),
 	 journal     = "Journal of Computational and Graphical Statistics",
-	 year        = "Forthcoming", 
+	 year        = "2014", 
 	 textVersion = "Goldstein, A., Kapelner, A., Bleich, J., and Pitkin, E., 
 					Peeking Inside the Black Box: Visualizing Statistical Learning With Plots 
-					of Individual Conditional Expectation. 
-					Journal of Computational and Graphical Statistics, Forthcoming",
+					of Individual Conditional Expectation. (2014)
+					Journal of Computational and Graphical Statistics, in press",
 	 header      = "To cite ICEbox in publications, please use:"
 )

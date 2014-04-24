@@ -1,0 +1,11 @@
+version 1.0
+
+* improved color scheme
+* customizable rug tick marks
+* cex parameters can now be passed to plot
+* improved axis scaling for ice plots
+* citation text due to publication
+
+version 0.2
+
+* Initial Release
