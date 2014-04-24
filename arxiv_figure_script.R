@@ -2,8 +2,7 @@
 # This R script generates the figures in 
 #   "Peeking Inside the Black Box: Visualizing Statistical Learning
 #    with Plots of Individual Conditional Expectation,"
-# available on arXiv at:
-# <arxiv link here>. 
+# available on arXiv at: http://arxiv.org/abs/1309.6392
 #
 # The stable version of the ICEbox package is available on CRAN, 
 # and all examples below will work with this version.  Beta

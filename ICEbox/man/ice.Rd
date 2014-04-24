@@ -82,8 +82,8 @@ predictions at the actual value of the predictors in the order of \code{Xice}.}
 is a column number, \code{xlab} is set to \code{colnames(X)[, predictor]}.}
 \item{nominal_axis}{If \code{TRUE}, \code{length(gridpts)} is 5 or fewer; otherwise \code{FALSE}.
 When \code{TRUE} the \code{plot} function treats the x-axis as if x is nominal.}
-\item{range_y}{If \code{y} was passed, the range of the response.  Otherwise it defaults to be
-\code{max(ice_curves)-min(ice_curves)} and a message is printed to the console.}
+\item{range_y}{If \code{y} was passed, the range of the response.  Otherwise it defaults to be \cr
+\code{max(ice_curves)} - \code{min(ice_curves)} and a message is printed to the console.}
 \item{sd_y}{If \code{y} was passed, the standard deviation of the response.  Otherwise it is defaults to
 \code{sd(actual_predictions)} and a message is printed to the console.}
 \item{Xice}{A matrix containing the subset of \code{X} for which ICE curves are estimated. 
@@ -101,10 +101,12 @@ of how the PDP is a form of post-processing. See Friedman (2001) for a descripti
 }
 \references{
 Jerome Friedman. Greedy Function Approximation: A Gradient Boosting Machine. The Annals of Statistics,
-29(5): 1189-1232, 2001.
+  29(5): 1189-1232, 2001.
 
-A Goldstein, A Kapelner, J Bleich and E Pitkin. Peeking Inside the Black Box: Visualizing Statistical
-Learning with Plots of Individual Conditional Expectation. ArXiv e-prints, 2013.
+Goldstein, A., Kapelner, A., Bleich, J., and Pitkin, E., Peeking
+  Inside the Black Box: Visualizing Statistical Learning With Plots of
+  Individual Conditional Expectation. (2014) Journal of Computational
+  and Graphical Statistics, in press
 }
 
 \seealso{

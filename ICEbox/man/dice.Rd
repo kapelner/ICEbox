@@ -47,10 +47,13 @@ estimated derivatives of the centered log-odds.}
 \item{dpdp}{The estimated partial derivative of the PDP.}
 }
 \references{
-A Goldstein, A Kapelner, J Bleich and E Pitkin. Peeking Inside the Black Box: Visualizing Statistical
-Learning with Plots of Individual Conditional Expectation. ArXiv e-prints, 2013. \cr
+Goldstein, A., Kapelner, A., Bleich, J., and Pitkin, E., Peeking
+  Inside the Black Box: Visualizing Statistical Learning With Plots of
+  Individual Conditional Expectation. (2014) Journal of Computational
+  and Graphical Statistics, in press \cr
 
-Martin Maechler et al. sfsmisc: Utilities from Seminar fuer Statistik ETH Zurich. R package version 1.0-24.
+Martin Maechler et al. sfsmisc: Utilities from Seminar fuer Statistik ETH Zurich. 
+  R package version 1.0-24.
 }
 
 \seealso{
