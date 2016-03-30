@@ -17,6 +17,7 @@ ice = function(object, X, y,
   if(!missing(y) && class(y) == "factor"){
     stop("Do not pass y when it is categorical variable.")
   }
+  
 
 	######## (1) check inputs
 	# (a) check for valid prediction routine...
@@ -31,21 +32,23 @@ ice = function(object, X, y,
 		#check for default prediction associated with class(object)
 		#this is harder than it should be because some classes have class(object)
 		#return a vector (randomForest, for instance).
-		classvec = class(object)
-		found_predict = 0; i = 0
-		while (!found_predict && i <= length(classvec)){
-			fcns = methods(class=classvec[i])
-			found_predict = found_predict + length(grep("predict", fcns))
-			i = i+1
+		classvec = class(object) #may have multiple classes
+		found_predict = FALSE
+		i = 1
+		for (i in 1 : length(classvec)){
+			if (length(grep("predict", methods(class = classvec[i]))) > 0){
+				found_predict = TRUE
+				break
+			}
 		}
-		if (found_predict == 0){
+		if (!found_predict){
 			stop("No generic predict method found for this object.")
 		} else {
 			use_generic = TRUE
 		}
 	}
 
-		
+	
 	######## (2)
 	N = nrow(X)
 	# grid points
@@ -59,15 +62,15 @@ ice = function(object, X, y,
 		# we don't sample randomly -- we ensure uniform sampling across
 		# quantiles of xj so as to not leave out portions of the dist'n of x.
 		order_xj = order(xj)
-		X = X[order_xj, ]  #ordered by column xj 	
+		X = X[order_xj, , drop = FALSE]  #ordered by column xj 	
 		nskip = round(1 / frac_to_build)
 		xj_sorted_indices_to_build = seq(1, N, by = nskip)
-		X = X[xj_sorted_indices_to_build, ]
+		X = X[xj_sorted_indices_to_build, , drop = FALSE]
 		xj = X[, predictor]
 		grid_pts = sort(xj)
 		indices_to_build = order_xj[xj_sorted_indices_to_build]
 	} else { 
-
+		
 	  #2: indices specified:
 	  if (!missing(indices_to_build)){
 	  	#extract the indicies the user asks for first, THEN order the remaining
@@ -75,7 +78,7 @@ ice = function(object, X, y,
 		if (frac_to_build < 1){
 			stop("\"frac_to_build\" and \"indices_to_build\" cannot both be specified simultaneously")
 		}
-		X = X[indices_to_build, ]
+		X = X[indices_to_build, , drop = FALSE]
 		xj = X[, predictor]
 		order_xj = order(xj) 
 	    #order the remaining by column xj
@@ -84,7 +87,7 @@ ice = function(object, X, y,
 		xj = X[, predictor]		
 	  }#end if for indices checking.
 	  else{ #3: nothing specified, so just re-order by xj
-		X = X[order(xj), ]
+		X = X[order(xj), , drop = FALSE]
 		xj = X[, predictor]
 	  }	
 	}

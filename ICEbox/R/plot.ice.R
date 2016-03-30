@@ -1,5 +1,5 @@
 plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds = TRUE, pts_preds_size = 1.5,
-					colorvec, color_by = NULL, x_quantile = FALSE, plot_pdp = TRUE,centered = FALSE, 
+					colorvec, color_by = NULL, x_quantile = FALSE, plot_pdp = TRUE, centered = FALSE, 
 					prop_range_y = TRUE, rug_quantile = seq(from = 0, to = 1, by = 0.1), 
 					centered_percentile = 0.01, prop_type="sd",...){
 	
