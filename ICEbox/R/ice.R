@@ -106,7 +106,7 @@ ice = function(object, X, y,
 	
 	# generate partials
 	if (use_generic){
-		actual_predictions = predict(object, X)
+		actual_predictions = predict(object, X, ...)
 	} else {
 		actual_predictions = predictfcn(object = object, newdata = X)
 	}
