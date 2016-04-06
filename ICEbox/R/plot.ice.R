@@ -98,6 +98,8 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds
 			}
 			
 			colorvec = rgbs[sort(x_color_by, index.return = T)$ix]
+			#now make the legend.
+			cat("ICE Plot Color Legend: red = low values of the color_by variable and green = high values\n")
 		}
 	}
 
