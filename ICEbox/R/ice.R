@@ -110,7 +110,7 @@ ice = function(object, X, y,
 		actual_prediction = predictfcn(object = object, newdata = X)
 	}
 	
-	if (class(actual_prediction) = "factor"){
+	if (class(actual_prediction) == "factor"){
 		stop("The predict function must return probabilities not a level in a factor.")
 	}
 	if (logodds){	
