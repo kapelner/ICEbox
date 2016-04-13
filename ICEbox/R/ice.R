@@ -84,9 +84,8 @@ ice = function(object, X, y,
 	    #order the remaining by column xj
 	    X = X[order_xj, ]  #ordered by column xj 	
 		grid_pts = sort(xj)
-		xj = X[, predictor]		
-	  }#end if for indices checking.
-	  else{ #3: nothing specified, so just re-order by xj
+		xj = X[, predictor] #end if for indices checking.
+	  } else { #3: nothing specified, so just re-order by xj
 		X = X[order(xj), , drop = FALSE]
 		xj = X[, predictor]
 	  }	
@@ -124,7 +123,14 @@ ice = function(object, X, y,
 			if (is.na(second_lowest)){ 
 				second_lowest = .0001
 			}
-			actual_predictions[(actual_predictions == 0)] = .5 * second_lowest
+			actual_predictions[actual_predictions == 0] = mean(c(second_lowest, 0)) 
+		}
+		if (max_pred == 1){
+			second_highest = max(actual_predictions[actual_predictions < 1])
+			if (is.na(second_highest)){ 
+				second_highest = .9999
+			}
+			actual_predictions[actual_predictions == 1] = mean(c(second_highest, 1))
 		}
 		actual_predictions = log(actual_predictions) - (1 / 2) * (log(actual_predictions) + log(1 - actual_predictions))
 	}
