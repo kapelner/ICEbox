@@ -109,6 +109,10 @@ ice = function(object, X, y,
 	} else {
 		actual_prediction = predictfcn(object = object, newdata = X)
 	}
+	
+	if (class(actual_prediction) = "factor"){
+		stop("The predict function must return probabilities not a level in a factor.")
+	}
 	if (logodds){	
 		min_pred = min(actual_prediction)
 		max_pred = max(actual_prediction)
