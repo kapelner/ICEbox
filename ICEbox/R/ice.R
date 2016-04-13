@@ -105,13 +105,13 @@ ice = function(object, X, y,
 	
 	# generate partials
 	if (use_generic){
-		actual_predictions = predict(object, X, ...)
+		actual_prediction = predict(object, X, ...)
 	} else {
-		actual_predictions = predictfcn(object = object, newdata = X)
+		actual_prediction = predictfcn(object = object, newdata = X)
 	}
 	if (logodds){	
-		min_pred = min(actual_predictions)
-		max_pred = max(actual_predictions)
+		min_pred = min(actual_prediction)
+		max_pred = max(actual_prediction)
 		#do some p_hat \in [0, 1] checking
 		if (min_pred < 0){ 
 			stop("the logodds option is on but predict returns values less than 0 (these should be probabilities!)")
@@ -119,20 +119,21 @@ ice = function(object, X, y,
 			stop("the logodds option is on but predict returns values greater than 1 (these should be probabilities!)")
 		}
 		if (min_pred == 0){
-			second_lowest = min(actual_predictions[actual_predictions > 0])
+			second_lowest = min(actual_prediction[actual_prediction > 0])
 			if (is.na(second_lowest)){ 
 				second_lowest = .0001
 			}
-			actual_predictions[actual_predictions == 0] = mean(c(second_lowest, 0)) 
+			actual_prediction[actual_prediction == 0] = mean(c(second_lowest, 0)) 
 		}
 		if (max_pred == 1){
-			second_highest = max(actual_predictions[actual_predictions < 1])
+			second_highest = max(actual_prediction[actual_prediction < 1])
 			if (is.na(second_highest)){ 
 				second_highest = .9999
 			}
-			actual_predictions[actual_predictions == 1] = mean(c(second_highest, 1))
+			actual_prediction[actual_prediction == 1] = mean(c(second_highest, 1))
 		}
-		actual_predictions = log(actual_predictions) - (1 / 2) * (log(actual_predictions) + log(1 - actual_predictions))
+		#centered logit formula
+		actual_prediction = log(actual_prediction) - (1 / 2) * (log(actual_prediction) + log(1 - actual_prediction))
 	}
 	
 	#renamed from 'ice_curves'
@@ -161,6 +162,7 @@ ice = function(object, X, y,
 	if (logodds){
 		#prevent log(0) error
 		min_val = min(ice_curves)
+		max_val = max(ice_curves)
 		if (min_val < 0){
 			stop("logodds is TRUE but predict returns negative values (these should be probabilities!)")
 		} 
@@ -169,8 +171,16 @@ ice = function(object, X, y,
 			if (is.na(second_lowest)){ 
 				second_lowest = .0001 #arbitrary epsilon value
 			} 
-			ice_curves[(ice_curves == 0)] = (.5 * second_lowest) #arbitrarily, halfway between 0 and second_lowest
+			ice_curves[(ice_curves == 0)] = mean(c(second_lowest, 0))  #arbitrarily, halfway between 0 and second_lowest
+		} 
+		if (max_val == 1){
+			second_highest = max(ice_curves[ice_curves < 1])
+			if (is.na(second_highest)){ 
+				second_highest = .9999 #arbitrary epsilon value
+			} 
+			ice_curves[(ice_curves == 1)] = mean(c(second_highest, 1))  #arbitrarily, halfway between 1 and second_highest
 		}
+		#centered logit formula
 		ice_curves = log(ice_curves) - (1 / 2) * (log(ice_curves) + log(1 - ice_curves)) 
 	}
 	if (verbose){cat("\n")}
@@ -192,7 +202,7 @@ ice = function(object, X, y,
 		sd_y = sd(y)
 	}else{
 		range_y = (max(ice_curves) - min(ice_curves))
-		sd_y = sd(actual_predictions)
+		sd_y = sd(actual_prediction)
 		cat("y not passed, so range_y is range of ice curves and sd_y is sd of predictions on real observations\n")
 	}
 
@@ -202,7 +212,7 @@ ice = function(object, X, y,
 	    predictfcn=NULL
 	}
 	
-	ice_obj = list(ice_curves = ice_curves, gridpts = grid_pts, predictor = predictor, xj = xj, actual_prediction = actual_predictions, 
+	ice_obj = list(ice_curves = ice_curves, gridpts = grid_pts, predictor = predictor, xj = xj, actual_prediction = actual_prediction, 
 			logodds = logodds, xlab = xlab, nominal_axis = nominal_axis, range_y = range_y, sd_y = sd_y, Xice = X, pdp = pdp,
 			indices_to_build = indices_to_build, frac_to_build = frac_to_build, predictfcn = predictfcn) 
 	class(ice_obj) = "ice"
