@@ -179,7 +179,7 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds
 	if (x$nominal_axis){
 		axis(1, at = sort(x$xj), labels = sort(x$xj), cex.axis = arg_list$cex.axis)
 	}	
-	if (centered && prop_range_y){
+	if (centered && prop_range_y && !x$logodds){ #don't draw this axis for logodds since it makes no sense
 		at = seq(min(ice_curves), max(ice_curves), length.out = 5)
 		#we need to organize it so it's at zero
 		at = at - min(abs(at))

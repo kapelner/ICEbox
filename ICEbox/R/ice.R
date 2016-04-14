@@ -111,11 +111,12 @@ ice = function(object, X, y,
 	}
 	
 	if (class(actual_prediction) == "factor"){
-		stop("The predict function must return probabilities not a level in a factor.")
+		stop("The predict function must return probabilities (not levels of a factor).")
 	}
 	if (logodds){	
 		min_pred = min(actual_prediction)
 		max_pred = max(actual_prediction)
+		
 		#do some p_hat \in [0, 1] checking
 		if (min_pred < 0){ 
 			stop("the logodds option is on but predict returns values less than 0 (these should be probabilities!)")
@@ -201,10 +202,10 @@ ice = function(object, X, y,
 		nominal_axis = FALSE
 	}	
 
-	if(!missing(y) ){
+	if(!missing(y)){
 		range_y = max(y) - min(y)
 		sd_y = sd(y)
-	}else{
+	} else if (!logodds){
 		range_y = (max(ice_curves) - min(ice_curves))
 		sd_y = sd(actual_prediction)
 		cat("y not passed, so range_y is range of ice curves and sd_y is sd of predictions on real observations\n")
