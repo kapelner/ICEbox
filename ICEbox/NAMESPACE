@@ -2,7 +2,6 @@ import(sfsmisc)
 
 export(ice, dice, clusterICE)
 
-#some methods
 S3method(plot, ice)
 S3method(print, ice)
 S3method(summary, ice)

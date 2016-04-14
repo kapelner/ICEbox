@@ -1,6 +1,10 @@
 version 1.1
 
-* fixed bug in segfault when using GBM -- was a fault with R's methods function
+* fixed bug in segfault when using GBM -- was a fault with R's methods function (thanks to Patrick Miller)
+* console legend for line colors when using color_by
+* fixed bug if classifier returns probabilities of 0 or 1
+* error message if the predict function returns levels when it should return probabilities 
+* fixed various other bugs
 
 version 1.0
 
