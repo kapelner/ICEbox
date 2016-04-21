@@ -65,6 +65,8 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_points_indices
 				stop("The predictor name given by color_by was not found in the X matrix")
 			}
 			x_color_by = x$Xice[, color_by]
+		} else if (length(color_by) > N){ #tell the user the thing they passed in doesn't line up
+			stop("The color_by_data vector you passed in has ", length(color_by), " entries but the ICEbox object only has ", N, " curves.")
 		} else if (length(color_by) == N){ #it's an actual data vector
 			x_color_by = color_by
 		}		

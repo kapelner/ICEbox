@@ -11,7 +11,7 @@ Goldstein et al (2013) for further details.
 }
 \usage{
 ice(object, X, y, predictor, predictfcn, verbose = TRUE, frac_to_build = 1, 
-             indices_to_build = NULL, num_grid_pts, logodds = F, ...)
+             indices_to_build = NULL, num_grid_pts, logodds = FALSE, probit = FALSE, ...)
 }
 
 \arguments{

@@ -8,12 +8,14 @@ Plotting of \code{ice} objects.
 }
 \usage{
 \method{plot}{ice}(x, plot_margin = 0.05, frac_to_plot = 1, 
-	plot_orig_pts_preds = TRUE, 
+	 plot_points_indices = NULL, plot_orig_pts_preds = TRUE, 
      pts_preds_size = 1.5, colorvec, color_by = NULL, 
      x_quantile = FALSE, plot_pdp = TRUE,
      centered = FALSE, prop_range_y = TRUE, 
      rug_quantile = seq(from = 0, to = 1, by = 0.1),
-     centered_percentile = 0.01, prop_type,...)
+     centered_percentile = 0.01, 
+     point_labels = NULL, point_labels_size = NULL, 
+     prop_type,...)
 }
 
 \arguments{
@@ -120,8 +122,8 @@ bhd.ice = ice(object = bhd_rf_mod, X = X, y = y, predictor = "age",
 plot(bhd.ice, x_quantile = TRUE, plot_pdp = TRUE, frac_to_plot = 1) 
 
 ## centered plot
-plot(bhd.ice, x_quantile = TRUE, plot_pdp = TRUE, frac_to_plot = 1
-            centered = TRUE) 
+plot(bhd.ice, x_quantile = TRUE, plot_pdp = TRUE, frac_to_plot = 1, 
+		centered = TRUE) 
 
 ## color the curves by high and low values of 'rm'.
 # First create an indicator variable which is 1 if the number of 
@@ -131,5 +133,9 @@ bhd.ice$Xice$I_rm = ifelse(bhd.ice$Xice$rm > median_rm, 1, 0)
 
 plot(bhd.ice, frac_to_plot = 1, centered = TRUE, prop_range_y = TRUE,  
             x_quantile = T, plot_orig_pts_preds = T, color_by = "I_rm")
+bhd.ice = ice(object = bhd_rf_mod, X = X, y = y, predictor = "age",
+            frac_to_build = 1)             
+plot(bhd.ice, frac_to_plot = 1, centered = TRUE, prop_range_y = TRUE,  
+            x_quantile = T, plot_orig_pts_preds = T, color_by = y)            
 }
 }

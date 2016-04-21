@@ -1,3 +1,8 @@
+importFrom("grDevices", "rgb")
+importFrom("graphics", "abline", "axis", "legend", "mtext", "points", "text")
+importFrom("stats", "ecdf", "kmeans", "predict", "qnorm", "quantile", "rbinom", "runif", "sd", "supsmu")
+importFrom("utils", "methods", "modifyList")
+  
 import(sfsmisc)
 
 export(ice, dice, clusterICE)

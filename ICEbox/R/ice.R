@@ -223,10 +223,12 @@ ice = function(object, X, y,
 		nominal_axis = FALSE
 	}	
 
+	range_y = NULL
+	sd_y = NULL
 	if(!missing(y)){
 		range_y = max(y) - min(y)
 		sd_y = sd(y)
-	} else if (!logodds || !probit){
+	} else if (!logodds && !probit){
 		range_y = (max(ice_curves) - min(ice_curves))
 		sd_y = sd(actual_prediction)
 		cat("y not passed, so range_y is range of ice curves and sd_y is sd of predictions on real observations\n")
