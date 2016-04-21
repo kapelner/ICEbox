@@ -1,7 +1,9 @@
-plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds = TRUE, pts_preds_size = 1.5,
+plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_points_indices = NULL,
+					plot_orig_pts_preds = TRUE, pts_preds_size = 1.5,
 					colorvec, color_by = NULL, x_quantile = FALSE, plot_pdp = TRUE, centered = FALSE, 
 					prop_range_y = TRUE, rug_quantile = seq(from = 0, to = 1, by = 0.1), 
-					centered_percentile = 0.01, prop_type="sd",...){
+					centered_percentile = 0.01, point_labels = NULL, point_labels_size = NULL,
+					prop_type = "sd", ...){
 	
 	DEFAULT_COLORVEC = c("firebrick3", "dodgerblue3", "gold1", "darkorchid4", "orange4", "forestgreen", "grey", "black")
 	#think of x as x. needs to be 'x' to match R's generic.
@@ -30,6 +32,12 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds
 	}
 	ice_curves = x$ice_curves
 	N = nrow(ice_curves)
+	
+	if (!is.null(point_labels)){
+		if (length(point_labels) != N){
+			stop("point_labels must be same length as number of ICE curves: ", N)
+		}
+	}
 
 	#### figure out the colorvec.
 	legend_text = NULL #default is no legend.
@@ -49,19 +57,23 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds
 	if (!missing(color_by) && missing(colorvec)){
 		#argument checking first:
 		arg_type = class(color_by)
-		if(!(arg_type %in% c("character", "numeric"))){
+		if(!(arg_type %in% c("character", "numeric", "factor"))){
 			stop("color_by must be a column name in X or a column index")
 		}
 		if(class(color_by) == "character"){
 			if(!(color_by %in% names(x$Xice))){
 				stop("The predictor name given by color_by was not found in the X matrix")
 			}
-		} else{  #check numeric
+			x_color_by = x$Xice[, color_by]
+		} else if (length(color_by) == N){ #it's an actual data vector
+			x_color_by = color_by
+		}		
+		else{  #check numeric
 			if( color_by < 1 || color_by > ncol(x$Xice) || (color_by%%1 !=0)){
 				stop("color_by must be a column name in X or a column index")
 			}
+			x_color_by = x$Xice[, color_by]
 		}
-		x_color_by = x$Xice[, color_by]
 		x_unique = unique(x_color_by)
 		num_x_color_by = length(x_unique)		
 		
@@ -75,10 +87,10 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds
 			
 			#now make the legend.
 			legend_text = as.data.frame(cbind(x_unique, DEFAULT_COLORVEC[1 : num_x_color_by]))
-			x_column_name = ifelse(is.character(color_by), color_by, paste("x_", color_by, sep = ""))
+			x_column_name = ifelse(length(color_by) == N, "data vector level", ifelse(is.character(color_by), color_by, paste("x_", color_by, sep = "")))
 			names(legend_text) = c(x_column_name,"color")
 			cat("ICE Plot Color Legend\n")
-			print(legend_text)			
+			print(legend_text, row.names = FALSE)			
 		} else {
 			if (is.factor(x_color_by)){
 				warning("color_by is a factor with greater than 10 levels: coercing to numeric.")
@@ -105,7 +117,14 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds
 
 	
 	#pull out a fraction of the lines to plot
-	plot_points_indices = which(as.logical(rbinom(N, 1, frac_to_plot)))
+	if (is.null(plot_points_indices)){
+		plot_points_indices = which(as.logical(sample(1 : N, round(frac_to_plot * N))))
+	} else {
+		if (frac_to_plot < 1){
+			stop("frac_to_plot has to be 1 when plot_points_indices is passed to the plot function.")
+		}
+	}
+	
 	ice_curves = ice_curves[plot_points_indices, ]
 	if (nrow(ice_curves) == 0){
 		stop("no rows selected: frac_to_plot too small.")
@@ -138,7 +157,7 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds
 		arg_list = modifyList(arg_list, list(xlab = xlab))
 	}
 	if (!missing(color_by)){
-		xlab = paste(xlab, "colored by", color_by)
+		xlab = paste(xlab, "colored by", ifelse(length(color_by) == N, "a provided data vector", color_by))
 		arg_list = modifyList(arg_list, list(xlab = xlab))
 	}
 	
@@ -217,6 +236,13 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds
 		}
 	}
 	
+	if (!is.null(point_labels)){
+		text(xj, yhat_actual, 
+				pos = 4,
+				labels = point_labels[plot_points_indices], 
+				cex = ifelse(is.null(point_labels_size), pts_preds_size, point_labels_size))
+	}
+	
 	if (!is.null(rug_quantile) && !x_quantile){
 		axis(side = 1, line = -0.1, at = quantile(x$xj, rug_quantile), lwd = 0, tick = T, tcl = 0.4, lwd.ticks = 2, col.ticks = "blue4", labels = FALSE, cex.axis = arg_list$cex.axis)
 	}
@@ -224,7 +250,8 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds
 	#if plot_pdp is true, plot actual pdp (in the sense of Friedman '01)
 	#Ensure this is done after all other plotting so nothing obfuscates the PDP
 	if (plot_pdp){
-		pdp = x$pdp
+		pdp = apply(ice_curves, 2, mean) # pdp = average over the columns (we don't use the one from the ICE object since plot_points_indices may have been passed)
+		#cat("pdp has", nrow(ice_curves), "rows\n")
 		if (centered){
 #			ice_curves[, ceiling(ncol(ice_curves) * centered_percentile + 0.00001)]
 			pdp = pdp - pdp[ceiling(length(pdp) * centered_percentile + 0.00001)]
@@ -236,10 +263,6 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_orig_pts_preds
 		points(grid, pdp, col = "BLACK", type = "l", lwd = 4)
 	}
 		
-	if (is.null(legend_text)){
-		invisible(list(plot_points_indices = plot_points_indices, legend_text = legend_text))
-	} else {
-		invisible(list(plot_points_indices = plot_points_indices, legend_text = legend_text))
-	}
+	invisible(list(plot_points_indices = plot_points_indices, legend_text = legend_text, pdp = pdp))
 }
 

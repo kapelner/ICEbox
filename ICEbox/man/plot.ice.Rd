@@ -27,6 +27,10 @@ Extra margin to pass to \code{ylim} as a fraction of the range of \code{x$ice_cu
 If \code{frac_to_plot} is less than 1, randomly plot \code{frac_to_plot} fraction of the
 curves in \code{x$ice_curves}.
 }
+  \item{plot_points_indices}{
+If not \code{NULL}, this plots only the indices of interest. If not \code{NULL}, \code{frac_to_plot} must be 1 otherwise
+an error is thrown. Default is \code{NULL}. 
+}
   \item{plot_orig_pts_preds}{
 If \code{TRUE}, marks each curve at the location of the observation's actual fitted value. If \code{FALSE},
 no mark is drawn.
@@ -38,7 +42,8 @@ Size of points to make if \code{plot_origin_pts_preds} is \code{TRUE}.
 Optional vector of colors to use for each curve.
 }
   \item{color_by}{
-Optional variable name (or column number) in \code{Xice} to color curves by. If the \code{color_by}
+Optional variable name in \code{Xice}, column number in \code{Xice}, or data vector of the correct length to color curves by. 
+If the \code{color_by}
 variable has 10 or fewer unique values, a discrete set of colors is used for each value and a legend is 
 printed and returned. If there are more values, curves are colored from light to dark corresponding 
 to low to high values of the variable specified by \code{color_by}.
@@ -64,8 +69,14 @@ centered values as a fraction of the range of the fitted values over the actual 
 The percentile of \code{predictor} for which all \code{ice_curves} are "pinched together" and set to be 0.
 Default is .01.
 }
+  \item{point_labels}{
+If not \code{NULL}, labels to plot next to each point. Default is \code{NULL}.
+}
+  \item{point_labels_size}{
+If not \code{NULL}, size of labels to plot next to each point. Default is \code{NULL} which means it's the size of \code{pts_preds_size}.  
+}
   \item{rug_quantile}{
-If not null, tick marks are drawn on the x-axis corresponding to the vector of quantiles specified by this parameter.
+If not \code{NULL}, tick marks are drawn on the x-axis corresponding to the vector of quantiles specified by this parameter.
 Forced to \code{NULL} when \code{x_quantile} is set to \code{TRUE}.
 }
 \item{prop_type}{

@@ -4,6 +4,10 @@ version 1.1
 * console legend for line colors when using color_by
 * fixed bug if classifier returns probabilities of 0 or 1
 * error message if the predict function returns levels when it should return probabilities 
+* plot probit for classification models
+* color by arbitrary data vector (including the response)
+* label points on the ice plots with a text vector
+* pass in index of points to plot
 * fixed various other bugs
 
 version 1.0
