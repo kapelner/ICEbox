@@ -1,7 +1,7 @@
 ice = function(object, X, y,
 		predictor, predictfcn, 
 		verbose = TRUE, frac_to_build = 1, indices_to_build = NULL, 
-		num_grid_pts, logodds = F, ...){
+		num_grid_pts, logodds = FALSE, probit = FALSE, ...){
 
 	MAX_NUM_UNIQUE_PTS_NOMINAL = 5
 
@@ -16,6 +16,10 @@ ice = function(object, X, y,
   
   if(!missing(y) && class(y) == "factor"){
     stop("Do not pass y when it is categorical variable.")
+  }
+  
+  if (logodds && probit){
+	  stop("You must employ either logodds OR probit but not both.")
   }
   
 
@@ -113,7 +117,7 @@ ice = function(object, X, y,
 	if (class(actual_prediction) == "factor"){
 		stop("The predict function must return probabilities (not levels of a factor).")
 	}
-	if (logodds){	
+	if (logodds || probit){	
 		min_pred = min(actual_prediction)
 		max_pred = max(actual_prediction)
 		
@@ -128,23 +132,31 @@ ice = function(object, X, y,
 			if (is.na(second_lowest)){ 
 				second_lowest = .0001
 			}
-			actual_prediction[actual_prediction == 0] = mean(c(second_lowest, 0)) 
+			lowest_practical_prob = mean(c(second_lowest, 0))
+			actual_prediction[actual_prediction == 0] = lowest_practical_prob
+			#warning("At least one probability was predicted to be 0, ICEbox is using ", lowest_practical_prob, " for the value(s) instead.")
 		}
 		if (max_pred == 1){
 			second_highest = max(actual_prediction[actual_prediction < 1])
 			if (is.na(second_highest)){ 
 				second_highest = .9999
 			}
-			actual_prediction[actual_prediction == 1] = mean(c(second_highest, 1))
+			highest_practical_prob = mean(c(second_highest, 1)) #arbitrarily, halfway between 1 and second_highest
+			actual_prediction[actual_prediction == 1] = highest_practical_prob
+			#warning("At least one probability was predicted to be 1, ICEbox is using ", highest_practical_prob, " for the value(s) instead.")
 		}
-		#centered logit formula
-		actual_prediction = log(actual_prediction) - (1 / 2) * (log(actual_prediction) + log(1 - actual_prediction))
+		
+		if (logodds){
+			#centered logit formula
+			actual_prediction = log(actual_prediction) - (1 / 2) * (log(actual_prediction) + log(1 - actual_prediction))
+		} else if (probit){
+			actual_prediction = qnorm(actual_prediction)
+		}
+		
 	}
 	
-	#renamed from 'ice_curves'
 	ice_curves = matrix(NA, nrow = nrow(X), ncol = length(grid_pts))
 	colnames(ice_curves) = grid_pts
-	#pred_test_values = seq(from = min_xj_seq, to = max_xj_seq, by = (max_xj_seq - min_xj_seq) / (num_grid_pts - 1))
 
 	#Compute actual pdp. Note that this is averaged over the observations
 	#we sample, so this might be different from the 'true' pdp if frac_to_build < 0.
@@ -161,10 +173,10 @@ ice = function(object, X, y,
 		if(verbose){cat(".")}			
 	}
 	#return X to its original state.
-	X[ ,predictor] = xvec_temp
+	X[, predictor] = xvec_temp
 
 	#do logit if necessary
-	if (logodds){
+	if (logodds || probit){
 		#prevent log(0) error
 		min_val = min(ice_curves)
 		max_val = max(ice_curves)
@@ -175,18 +187,27 @@ ice = function(object, X, y,
 			second_lowest = min(ice_curves[ice_curves > 0])
 			if (is.na(second_lowest)){ 
 				second_lowest = .0001 #arbitrary epsilon value
-			} 
-			ice_curves[(ice_curves == 0)] = mean(c(second_lowest, 0))  #arbitrarily, halfway between 0 and second_lowest
+			}
+			lowest_practical_prob = mean(c(second_lowest, 0)) #arbitrarily, halfway between 0 and second_lowest
+			ice_curves[(ice_curves == 0)] = lowest_practical_prob
+			warning("At least one probability was predicted to be 0, ICEbox is using ", lowest_practical_prob, " for the value(s) instead.")
 		} 
 		if (max_val == 1){
 			second_highest = max(ice_curves[ice_curves < 1])
 			if (is.na(second_highest)){ 
-				second_highest = .9999 #arbitrary epsilon value
+				second_highest = .9999 #arbitrary 1 - epsilon value
 			} 
-			ice_curves[(ice_curves == 1)] = mean(c(second_highest, 1))  #arbitrarily, halfway between 1 and second_highest
+			highest_practical_prob = mean(c(second_highest, 1)) #arbitrarily, halfway between 1 and second_highest
+			ice_curves[(ice_curves == 1)] = highest_practical_prob
+			warning("At least one probability was predicted to be 1, ICEbox is using ", highest_practical_prob, " for the value(s) instead.")
 		}
-		#centered logit formula
-		ice_curves = log(ice_curves) - (1 / 2) * (log(ice_curves) + log(1 - ice_curves)) 
+		if (logodds){
+			#centered logit formula
+			ice_curves = log(ice_curves) - (1 / 2) * (log(ice_curves) + log(1 - ice_curves)) 
+		} else if (probit){
+			ice_curves = qnorm(ice_curves)
+		}		
+
 	}
 	if (verbose){cat("\n")}
 	
@@ -205,7 +226,7 @@ ice = function(object, X, y,
 	if(!missing(y)){
 		range_y = max(y) - min(y)
 		sd_y = sd(y)
-	} else if (!logodds){
+	} else if (!logodds || !probit){
 		range_y = (max(ice_curves) - min(ice_curves))
 		sd_y = sd(actual_prediction)
 		cat("y not passed, so range_y is range of ice curves and sd_y is sd of predictions on real observations\n")
@@ -218,7 +239,7 @@ ice = function(object, X, y,
 	}
 	
 	ice_obj = list(ice_curves = ice_curves, gridpts = grid_pts, predictor = predictor, xj = xj, actual_prediction = actual_prediction, 
-			logodds = logodds, xlab = xlab, nominal_axis = nominal_axis, range_y = range_y, sd_y = sd_y, Xice = X, pdp = pdp,
+			logodds = logodds, probit = probit, xlab = xlab, nominal_axis = nominal_axis, range_y = range_y, sd_y = sd_y, Xice = X, pdp = pdp,
 			indices_to_build = indices_to_build, frac_to_build = frac_to_build, predictfcn = predictfcn) 
 	class(ice_obj) = "ice"
 		

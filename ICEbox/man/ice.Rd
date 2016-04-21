@@ -58,10 +58,16 @@ If missing, the curves are estimated at each unique value of \code{predictor}
 in the \code{X} observations we estimate ICE curves for.
 }
   \item{logodds}{
-If \code{TRUE}, for classification creates PDPs by plotting the centered log-odds of implied by the fitted 
+If \code{TRUE}, for classification creates PDPs by plotting the centered log-odds implied by the fitted 
 probabilities. We assume that the generic or passed predict function 
 returns probabilities, and so the flag tells us to transform these to centered logits after 
-the predictions are generated. 
+the predictions are generated. Note: \code{probit} cannot be \code{TRUE}.
+}
+  \item{probit}{
+If \code{TRUE}, for classification creates PDPs by plotting the probit implied by the fitted 
+probabilities. We assume that the generic or passed predict function 
+returns probabilities, and so the flag tells us to transform these to probits after 
+the predictions are generated. Note: \code{logodds} cannot be \code{TRUE}.
 }
   \item{\dots}{
 Other arguments to be passed to \code{object}'s generic predict function.  
