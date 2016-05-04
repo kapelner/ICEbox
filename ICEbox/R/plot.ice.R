@@ -153,15 +153,18 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_points_indices
 	if( is.null(arg_list$xlab)){
 		xlab = x$xlab
     	arg_list = modifyList(arg_list, list(xlab = xlab))
+		
+		#create some smart default for the x-label
+		if (x_quantile){
+			xlab = paste("quantile(", xlab, ")", sep = "")
+			arg_list = modifyList(arg_list, list(xlab = xlab))
+		}
+		if (!missing(color_by)){
+			xlab = paste(xlab, "colored by", ifelse(length(color_by) == N, "a provided data vector", color_by))
+			arg_list = modifyList(arg_list, list(xlab = xlab))
+		}		
 	}
-	if (x_quantile){
-		xlab = paste("quantile(", xlab, ")", sep = "")
-		arg_list = modifyList(arg_list, list(xlab = xlab))
-	}
-	if (!missing(color_by)){
-		xlab = paste(xlab, "colored by", ifelse(length(color_by) == N, "a provided data vector", color_by))
-		arg_list = modifyList(arg_list, list(xlab = xlab))
-	}
+
 	
 	#same for y label
 	if( is.null(arg_list$ylab)){	
