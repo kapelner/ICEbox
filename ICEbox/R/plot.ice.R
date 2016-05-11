@@ -268,6 +268,6 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_points_indices
 		points(grid, pdp, col = "BLACK", type = "l", lwd = 4)
 	}
 		
-	invisible(list(plot_points_indices = plot_points_indices, legend_text = legend_text, pdp = pdp))
+	invisible(list(ice_curves = ice_curves, range_ice_curves = range_ice_curves, plot_points_indices = plot_points_indices, legend_text = legend_text, pdp = pdp))
 }
 
