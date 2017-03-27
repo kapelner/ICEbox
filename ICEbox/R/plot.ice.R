@@ -2,7 +2,7 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_points_indices
 					plot_orig_pts_preds = TRUE, pts_preds_size = 1.5,
 					colorvec, color_by = NULL, x_quantile = FALSE, plot_pdp = TRUE, centered = FALSE, 
 					prop_range_y = TRUE, rug_quantile = seq(from = 0, to = 1, by = 0.1), 
-					centered_percentile = 0.01, point_labels = NULL, point_labels_size = NULL,
+					centered_percentile = 0, point_labels = NULL, point_labels_size = NULL,
 					prop_type = "sd", ...){
 	
 	DEFAULT_COLORVEC = c("firebrick3", "dodgerblue3", "gold1", "darkorchid4", "orange4", "forestgreen", "grey", "black")
@@ -120,7 +120,7 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_points_indices
 	
 	#pull out a fraction of the lines to plot
 	if (is.null(plot_points_indices)){
-		plot_points_indices = which(as.logical(sample(1 : N, round(frac_to_plot * N))))
+		plot_points_indices = sample(1 : N, round(frac_to_plot * N))
 	} else {
 		if (frac_to_plot < 1){
 			stop("frac_to_plot has to be 1 when plot_points_indices is passed to the plot function.")
@@ -132,7 +132,7 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_points_indices
 		stop("no rows selected: frac_to_plot too small.")
 	}
 	if (centered){
-		centering_vector = ice_curves[, ceiling(ncol(ice_curves) * centered_percentile + 0.00001)]
+		centering_vector = ice_curves[, max(ncol(ice_curves) * centered_percentile, 1)]
 		ice_curves = ice_curves - centering_vector
 	}
 	colorvec = colorvec[plot_points_indices]
