@@ -13,7 +13,7 @@ Plotting of \code{ice} objects.
      x_quantile = FALSE, plot_pdp = TRUE,
      centered = FALSE, prop_range_y = TRUE, 
      rug_quantile = seq(from = 0, to = 1, by = 0.1),
-     centered_percentile = 0.01, 
+     centered_percentile = 0, 
      point_labels = NULL, point_labels_size = NULL, 
      prop_type,...)
 }

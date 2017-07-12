@@ -76,16 +76,20 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_points_indices
 			}
 			x_color_by = x$Xice[, color_by]
 		}
-		x_unique = unique(x_color_by)
+		x_unique = sort(unique(x_color_by)) #if you don't sort, it can switch...
 		num_x_color_by = length(x_unique)		
-		
+
 		
 		#if there are 10 or fewer unique values of this x value, we use the
 		#same color in DEFAULT_COLORVEC for each. Otherwise, we use a rainbow.
 		if (num_x_color_by <= 10){
 			
-			which_category = match(x_color_by, x_unique)
-			colorvec = DEFAULT_COLORVEC[which_category]
+			
+			if (missing(colorvec)){
+				which_category = match(x_color_by, x_unique)
+				colorvec = DEFAULT_COLORVEC[which_category]
+			}
+			
 			
 			#now make the legend.
 			legend_text = as.data.frame(cbind(x_unique, DEFAULT_COLORVEC[1 : num_x_color_by]))

@@ -72,10 +72,12 @@ plot(rf.dice)
 # First create an indicator variable:
 rf.ice$Xice$I_rm = ifelse(rf.ice$Xice$rm > 6.2, 1, 0)  
 
+colorvec = if_else(rf.ice$Xice$I_rm == 1, "orange", "black")
+
 ### Fig 5: c-ICE colored by rm 
 # then plot using 'color_by'.
 par(mar = c(4.3, 4, 0.1, 2.3))
-plot(rf.ice, frac_to_plot = 1, centered = TRUE, prop_range_y = TRUE, plot_orig_pts_preds = T, color_by = "I_rm")
+plot(rf.ice, frac_to_plot = 1, centered = TRUE, prop_range_y = TRUE, plot_orig_pts_preds = T, color_by = "I_rm", colorvec = c("orange", "grey"))
 #######################################################################
 
 
