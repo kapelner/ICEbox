@@ -1,8 +1,8 @@
 Package: ICEbox
 Type: Package
 Title: Individual Conditional Expectation Plot Toolbox
-Version: 1.1.2
-Date: 2017-07-12
+Version: 1.1.3
+Date: 2020-02-17
 Author: Alex Goldstein, Adam Kapelner, Justin Bleich
 Maintainer: Adam Kapelner <kapelner@qc.cuny.edu>
 Description: Implements Individual Conditional Expectation (ICE) plots, a tool for visualizing the model estimated by any supervised learning algorithm. ICE plots refine Friedman's partial dependence plot by graphing the functional relationship between the predicted response and a covariate of interest for individual observations. Specifically, ICE plots highlight the variation in the fitted values across the range of a covariate of interest, suggesting where and to what extent they may exist.

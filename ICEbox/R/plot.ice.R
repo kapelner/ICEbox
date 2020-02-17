@@ -258,6 +258,7 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_points_indices
 	
 	#if plot_pdp is true, plot actual pdp (in the sense of Friedman '01)
 	#Ensure this is done after all other plotting so nothing obfuscates the PDP
+	pdp = NULL
 	if (plot_pdp){
 		pdp = apply(ice_curves, 2, mean) # pdp = average over the columns (we don't use the one from the ICE object since plot_points_indices may have been passed)
 		#cat("pdp has", nrow(ice_curves), "rows\n")
