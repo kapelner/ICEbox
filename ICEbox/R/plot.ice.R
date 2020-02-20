@@ -241,7 +241,7 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_points_indices
 		}
 		for (i in 1 : length(xj)){
 			points(xj[i], yhat_actual[i], col = rgb(0.1, 0.1, 0.1), pch = 16, cex = pts_preds_size)
-			points(xj[i], yhat_actual[i], col = colorvec[i], pch = 16, cex = round(pts_preds_size * 0.7))
+			points(xj[i], yhat_actual[i], col = colorvec[i], pch = 16, cex = pts_preds_size * 0.7)
 		}
 	}
 	
