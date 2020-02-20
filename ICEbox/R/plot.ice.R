@@ -124,14 +124,17 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_points_indices
 	
 	#pull out a fraction of the lines to plot
 	if (is.null(plot_points_indices)){
+		all_ice_curves = x$ice_curves #all
 		plot_points_indices = sample(1 : N, round(frac_to_plot * N))
+		ice_curves = ice_curves[plot_points_indices, ]
 	} else {
 		if (frac_to_plot < 1){
 			stop("frac_to_plot has to be 1 when plot_points_indices is passed to the plot function.")
 		}
+		ice_curves = ice_curves[plot_points_indices, ]
+		all_ice_curves = ice_curves
 	}
 	
-	ice_curves = ice_curves[plot_points_indices, ]
 	if (nrow(ice_curves) == 0){
 		stop("no rows selected: frac_to_plot too small.")
 	}
@@ -260,7 +263,7 @@ plot.ice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_points_indices
 	#Ensure this is done after all other plotting so nothing obfuscates the PDP
 	pdp = NULL
 	if (plot_pdp){
-		pdp = apply(ice_curves, 2, mean) # pdp = average over the columns (we don't use the one from the ICE object since plot_points_indices may have been passed)
+		pdp = apply(all_ice_curves, 2, mean) # pdp = average over all the columns unless the user specifically specifies 
 		#cat("pdp has", nrow(ice_curves), "rows\n")
 		if (centered){
 #			ice_curves[, ceiling(ncol(ice_curves) * centered_percentile + 0.00001)]

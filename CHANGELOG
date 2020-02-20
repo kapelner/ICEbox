@@ -1,8 +1,8 @@
 version 1.1.3
 
 * fixed minor bug in plot.ice when argument plot_pdp = FALSE
-* fixed minor bug in plot.ice when specifying argument pct_preds_size
-* 
+* fixed minor bug in plot.ice when specifying argument pts_preds_size
+* PDP remains the same in plot.ice built from all ice curves in the constructor unless the plot_points_indices argument is specified 
 
 version 1.1.2
 
