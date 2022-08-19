@@ -3,7 +3,7 @@ clusterICE = function(ice_obj, nClusters, plot = TRUE, plot_margin = 0.05, color
 
 	DEFAULT_COLORVEC = c("green", "red", "blue", "black", "green", "yellow", "pink", "orange", "forestgreen", "grey")
 	
-	if(class(ice_obj) != "ice" && class(ice_obj) != "dice"){
+	if(!inherits(ice_obj, "ice") && !inherits(ice_obj, "dice")){
 		stop("'ice_obj' must be of class 'ice' or 'dice'.")
 	}
 

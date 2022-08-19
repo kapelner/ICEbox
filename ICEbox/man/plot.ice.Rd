@@ -10,7 +10,7 @@ Plotting of \code{ice} objects.
 \method{plot}{ice}(x, plot_margin = 0.05, frac_to_plot = 1, 
 	 plot_points_indices = NULL, plot_orig_pts_preds = TRUE, 
      pts_preds_size = 1.5, colorvec, color_by = NULL, 
-     x_quantile = FALSE, plot_pdp = TRUE,
+     x_quantile = TRUE, plot_pdp = TRUE,
      centered = FALSE, prop_range_y = TRUE, 
      rug_quantile = seq(from = 0, to = 1, by = 0.1),
      centered_percentile = 0, 

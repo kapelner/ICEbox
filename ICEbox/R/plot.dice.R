@@ -11,7 +11,7 @@ plot.dice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_sd = TRUE, pl
 #	arg_list = as.list(match.call(expand.dots = TRUE))
 
 	#some argument checking
-	if (class(x) != "dice"){ 
+	if (!inherits(x, "dice")){ 
 		stop("object is not of class 'dice'")
 	}
 	if (frac_to_plot <= 0 || frac_to_plot > 1 ){
@@ -52,7 +52,7 @@ plot.dice = function(x, plot_margin = 0.05, frac_to_plot = 1, plot_sd = TRUE, pl
 		if(!(arg_type %in% c("character", "numeric"))){
 			stop("color_by must be a column name in X or a column index")
 		}
-		if(class(color_by) == "character"){
+		if(inherits(color_by, "character")){
 			if(!(color_by %in% names(x$Xice))){
 				stop("The predictor name given by color_by was not found in the X matrix")
 			}

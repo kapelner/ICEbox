@@ -1,7 +1,7 @@
 dice = function(ice_obj, DerivEstimator){
 
 	#error checking:
-	if(class(ice_obj) != "ice"){
+	if(!inherits(ice_obj, "ice")){
 		stop("ice_obj is not a valid ice object.")
 	}
 

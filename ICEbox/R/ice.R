@@ -6,7 +6,7 @@ ice = function(object, X, y,
 	MAX_NUM_UNIQUE_PTS_NOMINAL = 5
 
 	#check for factor
-	if (class(X[, predictor]) == "factor" || class(X[, predictor]) == "character"){
+	if (inherits(X[, predictor], "factor") || inherits(X[, predictor], "character")){
 		stop("ICE does not support factor attributes")
 	}
 	
@@ -14,7 +14,7 @@ ice = function(object, X, y,
 		stop("frac_to_build must be in (0, 1]")
 	}
   
-  if(!missing(y) && class(y) == "factor"){
+  if(!missing(y) && inherits(y, "factor")){
     stop("Do not pass y when it is categorical variable.")
   }
   
@@ -114,7 +114,7 @@ ice = function(object, X, y,
 		actual_prediction = predictfcn(object = object, newdata = X)
 	}
 	
-	if (class(actual_prediction) == "factor"){
+	if (inherits(actual_prediction, "factor")){
 		stop("The predict function must return probabilities (not levels of a factor).")
 	}
 	if (logodds || probit){	
@@ -211,7 +211,7 @@ ice = function(object, X, y,
 	}
 	if (verbose){cat("\n")}
 	
-	if (class(predictor) != "character"){
+	if (!inherits(predictor, "character")){
 		xlab = paste("x", predictor, sep = "_")  #x_1, x_2 etc.
 	} else {
 		xlab = predictor #the actual name of the feature.
@@ -247,3 +247,6 @@ ice = function(object, X, y,
 		
 	invisible(ice_obj)
 }
+
+
+#/c/Program\ Files/R/R-devel/bin/R.exe CMD INSTALL ICEbox -l "/c/Users/kapel/AppData/local/R/win-library/4.3"
