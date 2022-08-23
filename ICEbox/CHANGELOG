@@ -1,3 +1,6 @@
+version 1.1.5
+* plot.dice grid points are used by default
+
 version 1.1.4
 * plot.ice grid points are used by default
 * made ICEbox more flexible by taking Dave Armstrong's suggestion

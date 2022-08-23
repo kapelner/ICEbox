@@ -72,7 +72,7 @@ plot(rf.dice)
 # First create an indicator variable:
 rf.ice$Xice$I_rm = ifelse(rf.ice$Xice$rm > 6.2, 1, 0)  
 
-colorvec = if_else(rf.ice$Xice$I_rm == 1, "orange", "black")
+colorvec = ifelse(rf.ice$Xice$I_rm == 1, "orange", "black")
 
 ### Fig 5: c-ICE colored by rm 
 # then plot using 'color_by'.
