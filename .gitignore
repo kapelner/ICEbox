@@ -1,3 +1,14 @@
 .project
-
 .Rhistory
+ICEbox.Rcheck/
+ICEbox_*.tar.gz
+ICEbox/tests/
+benchmark_comparison.pdf
+benchmark_env/
+benchmark_full_report.pdf
+test_sg.R
+ICEbox/src/*.o
+ICEbox/src/*.rds
+ICEbox/src/*.so
+Rplots.pdf
+arxiv_figures/*

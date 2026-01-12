@@ -17,11 +17,14 @@
 library(ICEbox)
 library(randomForest)
 library(gam)
-library(gbm)
+library(gbm3)
 library(nnet)
 library(missForest)
 library(MASS) #has Boston Housing data, Pima
-
+options(java.parameters = c("-Xmx20g", "--add-modules=jdk.incubator.vector"))
+library(bartMachine)
+library(PTE)
+data(continuous_example)
 
 #######################################################################
 ############ Section: The ICE Toolbox #################################
@@ -38,34 +41,45 @@ rf_mod = randomForest(X, y)
 
 #################### ICE Procedure ####################################
 #make frac_to_build < 1 for fewer curves but faster computation
-rf.ice = ice(rf_mod, X, y, predictor = "age", frac_to_build = 1) 
+rf.ice = ice(rf_mod, X, y, predictor = "age", frac_to_build = 1, verbose = FALSE) 
 
 ### Fig 1: the PDP
 # Note we can plot Friedman's PDP from Section 2
 # by making the individual curves in the ICE white:
+cat("Generating Figure 1...\n")
+pdf("arxiv_figures/fig_01.pdf", width = 7, height = 7)
 par(mar = c(4.3, 4, 0.1, 0.3))
 plot(rf.ice, plot_pdp = TRUE, colorvec = rep("white", nrow(X)), plot_orig_pts_preds = FALSE)
+invisible(invisible(dev.off()))
 
 ### Fig 2: the ICE plot
 # Make frac_to_plot < 1 to plot a fraction of the curves built.  
 # This an make the plot less cluttered sometimes.
+cat("Generating Figure 2...\n")
+pdf("arxiv_figures/fig_02.pdf", width = 7, height = 7)
 par(mar = c(4.3, 4, 0.1, 0.3))
 plot(rf.ice, plot_pdp = TRUE, frac_to_plot = 1) 
-
+invisible(invisible(dev.off()))
 ################### c-ICE #############################################
 
 ### Fig 3: the c-ICE plot
 #just a matter of saying 'centered=TRUE'
+cat("Generating Figure 3...\n")
+pdf("arxiv_figures/fig_03.pdf", width = 7, height = 7)
 par(mar = c(4.3, 4, 0.1, 2.3))
 plot(rf.ice, plot_pdp = TRUE, centered = TRUE)
+invisible(invisible(dev.off()))
 
 ################### d-ICE #############################################
 #create the object:
-rf.dice = dice(rf.ice)
+rf.dice = dice(rf.ice, verbose = FALSE)
 
 ### Fig 4: the d-ICE plot
+cat("Generating Figure 4...\n")
+pdf("arxiv_figures/fig_04.pdf", width = 7, height = 7)
 par(mar = c(4.3, 4, 0.5, 2.3))
 plot(rf.dice)
+invisible(invisible(dev.off()))
 
 ################### Visualizing a second feature ######################
 # We investigate the c-ICE  by coloring it by the "rm" variable. 
@@ -76,8 +90,11 @@ colorvec = ifelse(rf.ice$Xice$I_rm == 1, "orange", "black")
 
 ### Fig 5: c-ICE colored by rm 
 # then plot using 'color_by'.
+cat("Generating Figure 5...\n")
+pdf("arxiv_figures/fig_05.pdf", width = 7, height = 7)
 par(mar = c(4.3, 4, 0.1, 2.3))
 plot(rf.ice, frac_to_plot = 1, centered = TRUE, prop_range_y = TRUE, plot_orig_pts_preds = T, color_by = "I_rm", colorvec = c("orange", "grey"))
+invisible(invisible(dev.off()))
 #######################################################################
 
 
@@ -114,13 +131,19 @@ y  = additivity_ex_data$y
 gam_mod = gam(y~s(x_1)+s(x_2)+s(x_1*x_2),data=Xy)   
 
 # build ICE and d-ICE:
-gam.ice = ice(gam_mod, X, predictor = 1, frac_to_build = 1) 
-gam.dice = dice(gam.ice)
+gam.ice = ice(gam_mod, X, predictor = 1, frac_to_build = 1, verbose = FALSE) 
+gam.dice = dice(gam.ice, verbose = FALSE)
 
 # plot the ICE plot with pdp, and d-ICE with dpdp
+cat("Generating Figure sim_add_ice.pdf...\n")
+pdf("arxiv_figures/sim_add_ice.pdf", width = 7, height = 7)
 plot(gam.ice, x_quantile = F, plot_pdp = T, frac_to_plot = 1)  
-plot(gam.dice, x_quantile = F, plot_dpdp = T, frac_to_plot = 1) 
+invisible(invisible(dev.off()))
 
+cat("Generating Figure sim_add_dice.pdf...\n")
+pdf("arxiv_figures/sim_add_dice.pdf", width = 7, height = 7)
+plot(gam.dice, x_quantile = F, plot_dpdp = T, frac_to_plot = 1) 
+invisible(invisible(dev.off()))
 #################### Finding Interactions #############################
 # function that generates simulated data:
 interaction_ex_sim = function(n,seednum=NULL){
@@ -165,14 +188,20 @@ ntree = gbm.perf(gbm_mod, method = "cv")
 # To predict with the cross-validated number of trees, we pass a custom predict function
 gbm.ice = ice(gbm_mod, X, predictor = "x_3", 
 			predictfcn = function(object, newdata){predict(object, newdata, n.tree = ntree)},
-			frac_to_build = 1)
+			frac_to_build = 1, verbose = FALSE)
 
 #plot only 5% of curves with quantiles, actual pdp, and original points. 
+cat("Generating Figure sim_int_ice.pdf...\n")
+pdf("arxiv_figures/sim_int_ice.pdf", width = 7, height = 7)
 plot(gbm.ice, x_quantile = F, plot_pdp = T, frac_to_plot = 0.05)
+invisible(invisible(dev.off()))
 
 # Create and plot d-ICE object:
-gbm.dice = dice(gbm.ice)
+gbm.dice = dice(gbm.ice, verbose = FALSE)
+cat("Generating Figure sim_int_dice.pdf...\n")
+pdf("arxiv_figures/sim_int_dice.pdf", width = 7, height = 7)
 plot(gbm.dice, plot_orig_pts_deriv = FALSE)
+invisible(invisible(dev.off()))
 
 #################### Extrapolation Detection ##########################
 #function that generates simulated data:
@@ -221,15 +250,17 @@ X = extrap_ex_data[,2:3] #predictors are second and third columns
 rf_mod = randomForest(Y~.,extrap_ex_data)
 
 # Create an ICE object:
-rf.ice_extrap = ice(rf_mod, X = X, predictor="x1", frac_to_build=1)
+rf.ice_extrap = ice(rf_mod, X = X, predictor="x1", frac_to_build=1, verbose = FALSE)
 
 # Set up 'color_by' to visualize extrapoloations in X-space.
 # x2_indic = 1 <==> no extrapolation 
 rf.ice_extrap$Xice$x2_indic = ifelse(rf.ice_extrap$Xice$x2>0,0,1) 
 
 # full ICE plot:
+cat("Generating Figure extrap_ice.pdf...\n")
+pdf("arxiv_figures/extrap_ice.pdf", width = 7, height = 7)
 plot(rf.ice_extrap, plot_pdp=FALSE, color_by="x2_indic") 
-#######################################################################
+invisible(invisible(dev.off()))#######################################################################
 
 
 
@@ -239,12 +270,12 @@ plot(rf.ice_extrap, plot_pdp=FALSE, color_by="x2_indic")
 
 ##################### Depression Clinical Data ########################
 
-library(bartMachine)
-library(PAI) #not a public CRAN library
-data(cpt1)   #not a public dataset
+X = continuous_example$X
+y = continuous_example$y
+y = as.numeric(y)
 
-bart_machine = build_bart_machine(X, y)
-ice.tx = ice(bart_machine, X, y, "treatment")
+bart_machine = build_bart_machine(X, y, verbose = FALSE)
+ice.tx = ice(bart_machine, X, y, predictor = "treatment", verbose = FALSE)
 
 bartFit = function(X, y){
 	build_bart_machine(X, y, run_in_sample = FALSE, verbose = FALSE)  
@@ -255,10 +286,12 @@ bartPred = function(object, newdata){
 }
 
 ice.backfitter = backfitter(X = X, y = y, predictor="treatment", eps=.005, 
-		fitMethod=bartFit, predictfcn = bartPred, iter.max = 10)
+		fitMethod=bartFit, predictfcn = bartPred, iter.max = 10, verbose = FALSE)
 
-alu_trt = additivityLineup(ice.backfitter, fitMethod = bartFit, realICE = ice.tx, figs = 20, centered = TRUE, color_by = "married")
-
+cat("Generating Figure alu_trt.pdf...\n")
+pdf("arxiv_figures/alu_trt.pdf", width = 10, height = 10)
+alu_trt = additivityLineup(ice.backfitter, fitMethod = bartFit, realICE = ice.tx, figs = 20, centered = TRUE, color_by = "x1")
+invisible(invisible(dev.off()))
 
 ##################### White Wine ######################################
 #load the data:
@@ -289,7 +322,7 @@ nn.ice = ice(nnet_mod, X=X, predictor = "pH",
                             newdata_std = scale(newdata, center = X_center, scale = X_scale)
                             predict(object, newdata_std)
                            }, 
-			y=y)
+			y=y, verbose = FALSE)
 
 ## ICE 
 # create an indicator for alcohol content to pass to 'color_by':
@@ -297,12 +330,18 @@ nn.ice$Xice$al_ind = ifelse(nn.ice$Xice$alcohol > 10, 1, 0)
 
 # Make a c-ICE plot, with frac_to_plot set so that ~300 observations are plotted.
 frac_to_plot = 300 / nrow(WhiteWine)
+cat("Generating Figure wine_nn_ice.pdf...\n")
+pdf("arxiv_figures/wine_nn_ice.pdf", width = 7, height = 7)
 plot(nn.ice, centered=TRUE, centered_percentile=0.01, frac_to_plot=frac_to_plot, color_by = "al_ind", x_quantile=TRUE)
+invisible(invisible(dev.off()))
 
 ## d-ICE
-nn.dice = dice(nn.ice)
+nn.dice = dice(nn.ice, verbose = FALSE)
+cat("Generating Figure wine_nn_dice.pdf...\n")
+pdf("arxiv_figures/wine_nn_dice.pdf", width = 7, height = 7)
 plot(nn.dice, x_quantile=TRUE, frac_to_plot = frac_to_plot, 
 				plot_sd = TRUE, plot_dpdp = TRUE, color_by = "al_ind")
+invisible(invisible(dev.off()))
 
 
 ################### Diabetes Classification in Pima Indians ###########
@@ -325,19 +364,21 @@ pima.ice = ice(pima_rf, X = X, predictor = "skin", logodds = TRUE,
 			 )
 
 # make a c-ICE plot:
+cat("Generating Figure pima_ice.pdf...\n")
+pdf("arxiv_figures/pima_ice.pdf", width = 7, height = 7)
 plot(pima.ice, x_quantile = TRUE, centered = TRUE)
+invisible(invisible(dev.off()))
 
 ## make a d-ICE object and plot it.
 pima.dice = dice(pima.ice)
+cat("Generating Figure pima_dice.pdf...\n")
+pdf("arxiv_figures/pima_dice.pdf", width = 7, height = 7)
 plot(pima.dice, x_quantile = TRUE)
-
+invisible(invisible(dev.off()))
 
 #######################################################################
 ############ Section: Additivity Lineup ###############################
 #######################################################################
-
-### 1) source the functions:
-source("additivityLineup.R"); source("backfitter.R")
 
 ### 2) load the data:
 data(WhiteWine) 
@@ -404,6 +445,51 @@ colorFcn = function(ice_obj){
 # Lineup:
 # In the paper, the real plot is in the bottom right position, but this is randomly
 # chosen on each call.
+cat("Generating Figure alu_pH.pdf...\n")
+pdf("arxiv_figures/alu_pH.pdf", width = 12, height = 9)
 alu_pH = additivityLineup(bf_pH, fitMethod=nn_FitFull, figs=12, realICE=nn_wine_ice, 
                           centered=TRUE, x_quantile=TRUE, frac_to_plot=.1,
 						  colorvecfcn=colorFcn, usecolorvecfcn_inreal=TRUE, plot_orig_pts=FALSE)
+invisible(invisible(dev.off()))
+
+#######################################################################
+############ Section: Aggregate PDFs ##################################
+#######################################################################
+
+gs_cmd = Sys.which("gs")
+if (gs_cmd != "") {
+	cat("\nAggregating all PDFs into all_arxiv_figures.PDF...\n")
+	
+	# List of files in order
+	all_pdfs = c(
+		"arxiv_figures/fig_01.pdf",
+		"arxiv_figures/fig_02.pdf",
+		"arxiv_figures/fig_03.pdf",
+		"arxiv_figures/fig_04.pdf",
+		"arxiv_figures/fig_05.pdf",
+		"arxiv_figures/sim_add_ice.pdf",
+		"arxiv_figures/sim_add_dice.pdf",
+		"arxiv_figures/sim_int_ice.pdf",
+		"arxiv_figures/sim_int_dice.pdf",
+		"arxiv_figures/extrap_ice.pdf",
+		"arxiv_figures/alu_trt.pdf",
+		"arxiv_figures/wine_nn_ice.pdf",
+		"arxiv_figures/wine_nn_dice.pdf",
+		"arxiv_figures/pima_ice.pdf",
+		"arxiv_figures/pima_dice.pdf",
+		"arxiv_figures/alu_pH.pdf"
+	)
+	
+	# Filter only existing files
+	all_pdfs = all_pdfs[file.exists(all_pdfs)]
+	
+	system2(gs_cmd, args = c(
+		"-dBATCH", "-dNOPAUSE", "-q", "-sDEVICE=pdfwrite", 
+		"-sOutputFile=all_arxiv_figures.PDF", all_pdfs
+	))
+	
+	cat("Aggregated PDF created: all_arxiv_figures.PDF\n")
+} else {
+	cat("\nGhostscript not found. PDFs remain separate in arxiv_figures/\n")
+}
+

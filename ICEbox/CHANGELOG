@@ -1,3 +1,15 @@
+version 1.2
+* upgraded to ggplot2
+* rotated the additivityLineup test into the package (was previously an experimental script) as well as its backfitter function
+* speedups via data.table
+* speedups via optional parallelization for ice, dice, clusterICE
+* speedup via Savitzky-Golay Filter for numerical derivative calculation implemented in Rcpp
+* other speedups in Rcpp
+* added Roxygen documentation
+* checkmate checks for all functions' arguments
+* tests
+* benchmark vs previous version
+
 version 1.1.5
 * plot.dice grid points are used by default
 
