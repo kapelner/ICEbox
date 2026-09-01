@@ -3,10 +3,13 @@
 * Added multi-platform GitHub Actions checks and automated pkgdown deployment.
 * Added a pkgdown website with a curated function reference and installation
   documentation.
+* Added Citation File Format and CodeMeta records, and expanded the package
+  citation to cover both the software and its methodological article.
 * Added regression tests for ICE and d-ICE construction, input validation, and
   compiled helpers.
-* Removed compiled build artifacts from version control and standardized
-  package-development metadata.
+* Removed compiled build artifacts from version control, replaced the malformed
+  repository license copy with canonical GPL-2 and GPL-3 texts, and modernized
+  package-development and discovery metadata.
 
 # ICEbox 1.2
 

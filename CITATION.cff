@@ -1,0 +1,61 @@
+cff-version: 1.2.0
+message: "If you use ICEbox, please cite both the methodological article and the software."
+type: software
+title: "ICEbox: Individual Conditional Expectation Plot Toolbox"
+version: 1.2.0.9000
+authors:
+  - family-names: Goldstein
+    given-names: Alex
+  - family-names: Kapelner
+    given-names: Adam
+    email: kapelner@qc.cuny.edu
+    orcid: "https://orcid.org/0000-0001-5985-6792"
+  - family-names: Bleich
+    given-names: Justin
+contact:
+  - family-names: Kapelner
+    given-names: Adam
+    email: kapelner@qc.cuny.edu
+    orcid: "https://orcid.org/0000-0001-5985-6792"
+identifiers:
+  - type: doi
+    value: "10.32614/CRAN.package.ICEbox"
+    description: "Permanent DOI for the ICEbox package on CRAN"
+repository-code: "https://github.com/kapelner/ICEbox"
+url: "https://kapelner.github.io/ICEbox/"
+license:
+  - GPL-2.0-only
+  - GPL-3.0-only
+keywords:
+  - individual conditional expectation
+  - ICE plots
+  - partial dependence
+  - model interpretability
+  - explainable artificial intelligence
+  - machine learning
+  - data visualization
+abstract: >
+  ICEbox provides tools for constructing and visualizing Individual
+  Conditional Expectation plots. These plots show the fitted relationship
+  between a feature and the predicted response for individual observations,
+  revealing heterogeneous effects and interactions that can be hidden by an
+  averaged partial dependence plot.
+preferred-citation:
+  type: article
+  title: "Peeking Inside the Black Box: Visualizing Statistical Learning With Plots of Individual Conditional Expectation"
+  authors:
+    - family-names: Goldstein
+      given-names: Alex
+    - family-names: Kapelner
+      given-names: Adam
+    - family-names: Bleich
+      given-names: Justin
+    - family-names: Pitkin
+      given-names: Emil
+  journal: "Journal of Computational and Graphical Statistics"
+  volume: 24
+  issue: 1
+  start: 44
+  end: 65
+  year: 2015
+  doi: "10.1080/10618600.2014.907095"

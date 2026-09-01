@@ -3,6 +3,18 @@ url: https://kapelner.github.io/ICEbox/
 template:
   bootstrap: 5
 
+home:
+  title: "ICEbox: Individual Conditional Expectation Plots"
+  description: >
+    R tools for visualizing heterogeneous fitted relationships with
+    Individual Conditional Expectation plots, derivative ICE plots, partial
+    dependence, and additivity diagnostics.
+
+navbar:
+  structure:
+    left:  [reference, news]
+    right: [search, github]
+
 reference:
 - title: Build ICE curves
   contents:

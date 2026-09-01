@@ -1,21 +1,36 @@
-citHeader("")
+citHeader("To cite ICEbox, please cite both the methodological article and the software:")
 
 bibentry(
-     bibtype     = "Article",
-     title       = "Peeking Inside the Black Box: Visualizing Statistical Learning With Plots of Individual Conditional Expectation",
-     author      = c(person("Alex", "Goldstein"),
-                    person("Adam", "Kapelner"),
-                    person("Justin", "Bleich"),
-                    person("Emil", "Pitkin")),
-     journal     = "Journal of Computational and Graphical Statistics",
-     volume      = "24",
-     number      = "1",
-     pages       = "44--65",
-     doi         = "10.1080/10618600.2014.907095",
-     year        = "2015",
-     textVersion = "Goldstein, A., Kapelner, A., Bleich, J., and Pitkin, E., 
-                    Peeking Inside the Black Box: Visualizing Statistical Learning With Plots 
-                    of Individual Conditional Expectation. (2015)
-                    Journal of Computational and Graphical Statistics, 24(1): 44-65",
-     header      = "To cite ICEbox in publications, please use:"
+  bibtype = "Article",
+  title = "Peeking Inside the Black Box: Visualizing Statistical Learning With Plots of Individual Conditional Expectation",
+  author = c(
+    person("Alex", "Goldstein"),
+    person("Adam", "Kapelner"),
+    person("Justin", "Bleich"),
+    person("Emil", "Pitkin")
+  ),
+  journal = "Journal of Computational and Graphical Statistics",
+  volume = "24",
+  number = "1",
+  pages = "44--65",
+  year = "2015",
+  doi = "10.1080/10618600.2014.907095"
+)
+
+bibentry(
+  bibtype = "Manual",
+  title = "{ICEbox}: Individual Conditional Expectation Plot Toolbox",
+  author = c(
+    person("Alex", "Goldstein"),
+    person(
+      "Adam",
+      "Kapelner",
+      email = "kapelner@qc.cuny.edu",
+      comment = c(ORCID = "0000-0001-5985-6792")
+    ),
+    person("Justin", "Bleich")
+  ),
+  year = "2026",
+  note = sprintf("R package version %s", meta$Version),
+  url = "https://kapelner.github.io/ICEbox/"
 )

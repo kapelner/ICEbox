@@ -1,0 +1,71 @@
+{
+  "@context": "https://w3id.org/codemeta/3.0",
+  "@type": "SoftwareSourceCode",
+  "name": "ICEbox: Individual Conditional Expectation Plot Toolbox",
+  "description": "R tools for constructing and visualizing Individual Conditional Expectation plots, derivative ICE plots, partial dependence, and additivity diagnostics for fitted supervised-learning models.",
+  "version": "1.2.0.9000",
+  "license": [
+    "https://spdx.org/licenses/GPL-2.0-only",
+    "https://spdx.org/licenses/GPL-3.0-only"
+  ],
+  "codeRepository": "https://github.com/kapelner/ICEbox",
+  "issueTracker": "https://github.com/kapelner/ICEbox/issues",
+  "url": "https://kapelner.github.io/ICEbox/",
+  "identifier": "https://doi.org/10.32614/CRAN.package.ICEbox",
+  "programmingLanguage": [
+    {"@type": "ComputerLanguage", "name": "R"},
+    {"@type": "ComputerLanguage", "name": "C++"}
+  ],
+  "runtimePlatform": "R",
+  "operatingSystem": ["Linux", "macOS", "Windows"],
+  "keywords": [
+    "individual conditional expectation",
+    "ICE plots",
+    "partial dependence",
+    "model interpretability",
+    "explainable artificial intelligence",
+    "machine learning",
+    "data visualization"
+  ],
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Alex",
+      "familyName": "Goldstein"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Adam",
+      "familyName": "Kapelner",
+      "email": "kapelner@qc.cuny.edu",
+      "@id": "https://orcid.org/0000-0001-5985-6792"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Justin",
+      "familyName": "Bleich"
+    }
+  ],
+  "maintainer": {
+    "@type": "Person",
+    "givenName": "Adam",
+    "familyName": "Kapelner",
+    "email": "kapelner@qc.cuny.edu",
+    "@id": "https://orcid.org/0000-0001-5985-6792"
+  },
+  "referencePublication": {
+    "@type": "ScholarlyArticle",
+    "name": "Peeking Inside the Black Box: Visualizing Statistical Learning With Plots of Individual Conditional Expectation",
+    "identifier": "https://doi.org/10.1080/10618600.2014.907095",
+    "datePublished": "2015",
+    "isPartOf": {
+      "@type": "Periodical",
+      "name": "Journal of Computational and Graphical Statistics"
+    }
+  },
+  "relatedLink": [
+    "https://kapelner.r-universe.dev/ICEbox",
+    "https://CRAN.R-project.org/package=ICEbox",
+    "https://arxiv.org/abs/1309.6392"
+  ]
+}
