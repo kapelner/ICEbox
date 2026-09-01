@@ -1,3 +1,13 @@
+# ICEbox 1.2.0.9000
+
+* Added multi-platform GitHub Actions checks and automated pkgdown deployment.
+* Added a pkgdown website with a curated function reference and installation
+  documentation.
+* Added regression tests for ICE and d-ICE construction, input validation, and
+  compiled helpers.
+* Removed compiled build artifacts from version control and standardized
+  package-development metadata.
+
 # ICEbox 1.2
 
 * Migrated plotting to ggplot2.

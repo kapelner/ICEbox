@@ -1,7 +1,7 @@
 Package: ICEbox
 Type: Package
 Title: Individual Conditional Expectation Plot Toolbox
-Version: 1.2
+Version: 1.2.0.9000
 Date: 2026-01-11
 Author: Alex Goldstein [aut], Adam Kapelner [aut, cre] (ORCID: <https://orcid.org/0000-0001-5985-6792>), Justin Bleich [aut]
 Authors@R: c(person(given = "Alex",
