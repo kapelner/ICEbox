@@ -1,0 +1,34 @@
+url: https://kapelner.github.io/ICEbox/
+
+template:
+  bootstrap: 5
+
+reference:
+- title: Build ICE curves
+  contents:
+  - ice
+  - dice
+  - clusterICE
+- title: Plot and inspect
+  contents:
+  - plot.ice
+  - plot.dice
+  - print.ice
+  - print.dice
+  - summary.ice
+  - summary.dice
+- title: Test additivity
+  contents:
+  - additivityLineup
+  - backfitter
+- title: Data
+  contents:
+  - WhiteWine
+- title: High-performance helpers
+  contents:
+  - colSds_cpp
+  - derivative_cpp
+  - melt_ice_curves_cpp
+  - rowCenter_cpp
+  - sg_smooth_cpp
+  - transform_ice_curves_cpp
