@@ -21,11 +21,18 @@
   "keywords": [
     "individual conditional expectation",
     "ICE plots",
-    "partial dependence",
+    "derivative ICE plots",
+    "d-ICE plots",
+    "partial dependence plots",
+    "interpretable machine learning",
     "model interpretability",
     "explainable artificial intelligence",
-    "machine learning",
-    "data visualization"
+    "feature effect visualization",
+    "interaction detection",
+    "heterogeneous effects",
+    "black-box models",
+    "supervised learning",
+    "statistical learning"
   ],
   "author": [
     {

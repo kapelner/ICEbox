@@ -32,6 +32,11 @@ License: GPL-2 | GPL-3
 URL: https://kapelner.github.io/ICEbox/,
     https://github.com/kapelner/ICEbox
 BugReports: https://github.com/kapelner/ICEbox/issues
+X-schema.org-keywords: individual conditional expectation, ICE plots,
+    derivative ICE plots, d-ICE plots, partial dependence plots,
+    interpretable machine learning, model interpretability, explainable AI,
+    feature effect visualization, interaction detection, heterogeneous effects,
+    black-box models, supervised learning, statistical learning
 Imports:
     checkmate,
     data.table,
