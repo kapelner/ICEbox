@@ -1,5 +1,4 @@
-ICEbox
-======
+# ICEbox: Individual Conditional Expectation Plots <img src="ICEbox/man/figures/logo.png" align="right" height="139" alt="ICEbox hex logo" />
 
 [![CRAN status](https://www.r-pkg.org/badges/version/ICEbox)](https://CRAN.R-project.org/package=ICEbox)
 [![R-CMD-check](https://github.com/kapelner/ICEbox/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kapelner/ICEbox/actions/workflows/R-CMD-check.yaml)

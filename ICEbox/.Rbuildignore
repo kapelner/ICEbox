@@ -1,3 +1,5 @@
 ^_pkgdown\.yml$
 ^index\.md$
 ^docs$
+^pkgdown$
+^man/figures/logo-source\.svg$

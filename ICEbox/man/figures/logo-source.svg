@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1160" role="img" aria-labelledby="title desc">
+  <title id="title">ICEbox hex logo</title>
+  <desc id="desc">A navy and cyan hex badge containing the ICEbox name and a fan of individual conditional expectation curves, with one curve highlighted in orange.</desc>
+
+  <defs>
+    <clipPath id="plot-window">
+      <rect x="178" y="642" width="644" height="270" rx="20"/>
+    </clipPath>
+  </defs>
+
+  <!-- Transparent outside the badge. -->
+  <path fill="#79c7ea" stroke="#173451" stroke-width="3"
+        d="M500 3 997 288v584L500 1157 3 872V288Z"/>
+  <path fill="#203f66"
+        d="M500 37 967 305v550L500 1123 33 855V305Z"/>
+
+  <!-- Small fan-of-curves motif. -->
+  <g fill="none" stroke-linecap="round" stroke-width="13">
+    <path stroke="#ffffff" d="M390 210 C430 182 471 178 500 205 C529 232 570 228 610 196"/>
+    <path stroke="#79c7ea" d="M390 210 C432 210 468 230 500 205 C533 180 569 181 610 196"/>
+    <path stroke="#eda400" d="M390 210 C430 245 468 247 500 205 C533 163 570 163 610 196"/>
+  </g>
+  <g fill="#ffffff">
+    <circle cx="390" cy="210" r="12"/>
+    <circle cx="500" cy="205" r="12"/>
+    <circle cx="610" cy="196" r="12"/>
+  </g>
+
+  <!-- Package name and expansion. -->
+  <text x="500" y="420" fill="#ffffff" text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif" font-size="190" font-weight="800"
+        letter-spacing="-8">ICE<tspan fill="#bfe7fa" font-weight="600">box</tspan></text>
+  <rect x="262" y="458" width="476" height="8" rx="4" fill="#eda400"/>
+  <text x="500" y="522" fill="#d8effb" text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif" font-size="35" font-weight="700"
+        letter-spacing="4">INDIVIDUAL CONDITIONAL</text>
+  <text x="500" y="568" fill="#d8effb" text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif" font-size="35" font-weight="700"
+        letter-spacing="5">EXPECTATION</text>
+
+  <!-- A boxed collection of heterogeneous fitted relationships. -->
+  <rect x="160" y="624" width="680" height="306" rx="29"
+        fill="#183653" stroke="#79c7ea" stroke-width="7"/>
+  <g clip-path="url(#plot-window)">
+    <g stroke="#79c7ea" stroke-width="3" opacity="0.15">
+      <path d="M178 708H822"/>
+      <path d="M178 790H822"/>
+      <path d="M178 872H822"/>
+      <path d="M322 642V912"/>
+      <path d="M500 642V912"/>
+      <path d="M678 642V912"/>
+    </g>
+    <g fill="none" stroke-linecap="round" stroke-width="9">
+      <path stroke="#d8effb" opacity="0.55" d="M184 862 C286 855 354 820 436 774 S610 683 816 667"/>
+      <path stroke="#79c7ea" opacity="0.75" d="M184 842 C279 819 357 774 444 760 S621 754 816 703"/>
+      <path stroke="#ffffff" opacity="0.90" d="M184 876 C281 845 351 846 437 812 S622 706 816 729"/>
+      <path stroke="#79c7ea" opacity="0.72" d="M184 826 C282 826 350 786 432 733 S618 681 816 650"/>
+      <path stroke="#d8effb" opacity="0.55" d="M184 892 C279 850 357 810 442 822 S621 807 816 757"/>
+      <path stroke="#eda400" stroke-width="13" d="M184 851 C277 871 354 833 441 779 S628 722 816 689"/>
+    </g>
+    <g fill="#eda400" stroke="#ffffff" stroke-width="5">
+      <circle cx="184" cy="851" r="12"/>
+      <circle cx="441" cy="779" r="12"/>
+      <circle cx="816" cy="689" r="12"/>
+    </g>
+  </g>
+
+  <text x="500" y="1013" fill="#ffffff" text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="700"
+        letter-spacing="6">SEE EVERY CURVE</text>
+</svg>

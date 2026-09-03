@@ -1,4 +1,4 @@
-# ICEbox
+# ICEbox <img src="man/figures/logo.png" align="right" height="139" alt="ICEbox hex logo" />
 
 ICEbox provides tools for constructing and visualizing Individual Conditional
 Expectation (ICE) plots. ICE plots show the fitted relationship between a
